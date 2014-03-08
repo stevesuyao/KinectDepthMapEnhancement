@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IncludePath>D:\Program Files\PrimeSense\NITE\Include;D:\Program Files\OpenNI\Include;D:\opencv\build\include;D:\Program Files\PCL 1.6.0\include\pcl-1.6;D:\Program Files\PCL 1.6.0\3rdParty\Boost\include;D:\Program Files\PCL 1.6.0\3rdParty\Eigen\include;D:\Program Files\PCL 1.6.0\3rdParty\flann\include;D:\Program Files\PCL 1.6.0\3rdParty\qhull\include;D:\Program Files\PCL 1.6.0\3rdParty\VTK\include\;D:\Program Files\PCL 1.6.0\3rdParty\VTK\include\vtk-5.8;D:\Library\glm-0.9.4.3\glm-0.9.4.3;C:\ProgramData\NVIDIA Corporation\NVIDIA GPU Computing SDK\C\common\inc;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\include;D:\Program Files\Point Grey Research\FlyCapture2\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LibraryPath>D:\Program Files\PrimeSense\NITE\Lib64;D:\Program Files\OpenNI\Lib64;D:\opencv\build\x64\vc10\lib;D:\Program Files\PCL 1.6.0\lib;D:\Program Files\PCL 1.6.0\3rdParty\Boost\lib;D:\Program Files\PCL 1.6.0\3rdParty\flann\lib;D:\Program Files\PCL 1.6.0\3rdParty\qhull\lib;D:\Program Files\PCL 1.6.0\3rdParty\VTK\lib;D:\Program Files\PCL 1.6.0\3rdParty\VTK\lib\vtk-5.8;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\lib\x64;D:\Program Files\Point Grey Research\FlyCapture2\lib64\C;D:\Program Files\Point Grey Research\FlyCapture2\lib64\FC1;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <AdditionalDependencies>glut64.lib;PGRFlyCaptureGUI.lib;PGRFlyCapture.lib;flycapture2_C.lib;cublas.lib;cuda.lib;cudart.lib;cufft.lib;curand.lib;cusparse.lib;npp.lib;nvcuvenc.lib;nvcuvid.lib;opencv_calib3d243.lib;opencv_contrib243.lib;opencv_core243.lib;opencv_features2d243.lib;opencv_gpu243.lib;opencv_highgui243.lib;opencv_imgproc243.lib;opencv_legacy243.lib;opencv_ml243.lib;opencv_objdetect243.lib;opencv_ts243.lib;opencv_video243.lib;pcl_apps_release.lib;pcl_common_release.lib;pcl_features_release.lib;pcl_filters_release.lib;pcl_io_release.lib;pcl_io_ply_release.lib;pcl_kdtree_release.lib;pcl_keypoints_release.lib;pcl_octree_release.lib;pcl_registration_release.lib;pcl_sample_consensus_release.lib;pcl_search_release.lib;pcl_segmentation_release.lib;pcl_surface_release.lib;pcl_tracking_release.lib;pcl_visualization_release.lib;flann.lib;flann_s.lib;flann_cpp_s.lib;qhull6.lib;qhullcpp.lib;qhullstatic.lib;qhullstatic_p.lib;openNI64.lib;OpenNI.jni64.lib;XnVNITE.jni64.lib;XnVNITE64_1_5_2.lib;NiSampleModule64.lib;NiSampleExtensionModule64.lib;MapReduceMPI.lib;mpistubs.lib;vtkalglib.lib;vtkCharts.lib;vtkCommon.lib;vtkDICOMParser.lib;vtkexoIIc.lib;vtkexpat.lib;vtkFiltering.lib;vtkfreetype.lib;vtkftgl.lib;vtkGenericFiltering.lib;vtkGeovis.lib;vtkGraphics.lib;vtkhdf5.lib;vtkHybrid.lib;vtkImaging.lib;vtkInfovis.lib;vtkIO.lib;vtkjpeg.lib;vtklibxml2.lib;vtkmetaio.lib;vtkNetCDF.lib;vtkNetCDF_cxx.lib;vtkpng.lib;vtkproj4.lib;vtkRendering.lib;vtksqlite.lib;vtksys.lib;vtktiff.lib;vtkverdict.lib;vtkViews.lib;vtkVolumeRendering.lib;vtkWidgets.lib;vtkzlib.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>
