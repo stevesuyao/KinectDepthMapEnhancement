@@ -18,6 +18,8 @@
 #include "EdgeRefinedSuperpixel/EdgeRefinedSuperpixel.h"
 #include "MarkovRandomField/MarkovRandomField.h"
 #include "RegionGrowingBilateralFilter.h"
+#include "KinectDepthEnhancement.h"
+#include "SPDepthSuperResolution.h"
 
 float color_sigma = 250.0f;
 float spatial_sigma = 15.0f;
@@ -55,6 +57,12 @@ int main(){
 	//region growing bilateral filter
 	RegionGrowingBilateralFilter RGBF(Kinect::Width, Kinect::Height);
 	RGBF.SetParametor(sp_rows, sp_cols, kinect.GetIntrinsicMatrix());
+	//kinect depth map enhancement
+	KinectDepthEnhancement KDE(Kinect::Width, Kinect::Height);
+	KDE.SetParametor(sp_rows, sp_cols, kinect.GetIntrinsicMatrix());
+	//super-pixel based depth image super-resolution
+	SPDepthSuperResolution SPDSP(Kinect::Width, Kinect::Height);
+	SPDSP.SetParametor(sp_rows, sp_cols, kinect.GetIntrinsicMatrix());
 	//////////////////////////////////////////////////////capture///////////////////////////////////////////////////////////
 	if(capture){
 		int count=0;
@@ -119,9 +127,15 @@ int main(){
 	//region growing bilateral filter
 	RGBF.Process(inputDepth_Device, points_Device, Color_Device);
 	convertor.projectiveToReal(RGBF.getRefinedDepth_Device(), refinedPoints_Device);
+	convertor.projectiveToReal(MRF.getFiltered_Device(), points_Device);
 	cudaMemcpy(refinedPoints_Host, refinedPoints_Device, sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
 	cudaMemcpy(points_Host, points_Device, sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
-
+	//Denoising of kinect depth map using piecewise planar surface
+	KDE.Process(inputDepth_Device, points_Device, Color_Device);
+	cudaMemcpy(points_Host, KDE.getOptimizedPoints_Device(), sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
+	//Superpixel based depth image super-resolution
+	SPDSP.Process(inputDepth_Device, points_Device, Color_Device);
+	cudaMemcpy(points_Host, SPDSP.getOptimizedPoints_Device(), sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
 	//////////////////////////////////////////////////////////////////////output//////////////////////////////////////////////////////////////////
 	//visualize
 	pcl::PointCloud<pcl::PointXYZRGB>::Ptr input (new pcl::PointCloud<pcl::PointXYZRGB>);

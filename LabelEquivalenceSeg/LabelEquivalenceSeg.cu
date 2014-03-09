@@ -33,6 +33,25 @@ __global__ void initLabel(float4* input_nd, int* merged_cluster_label, int* ref,
 			merged_cluster_label[x+y*width] = -1;
 		}
 }
+//.__global__ void initLabel(float4* input_nd, int* merged_cluster_label, int* ref, 
+//.	float4*  cluster_nd, int* cluster_label, int width, int height){
+//.		int x = blockIdx.x * blockDim.x + threadIdx.x;
+//.		int y = blockIdx.y * blockDim.y + threadIdx.y;
+//.
+//.		
+//.		if(abs(cluster_nd[cluster_label[x+y*width]].x) < 1.1 && cluster_label[x+y*width] > -1){
+//.			merged_cluster_label[x+y*width] = x+y*width;	
+//.			input_nd[x+y*width] = cluster_nd[cluster_label[x+y*width]];
+//.			ref[x+y*width] = x+y*width;
+//.		} else {
+//.			input_nd[x+y*width].x = 5.0;
+//.			input_nd[x+y*width].y = 5.0;
+//.			input_nd[x+y*width].z = 5.0;
+//.			input_nd[x+y*width].w = 5.0;
+//.			merged_cluster_label[x+y*width] = -1;
+//.			ref[x+y*width] = -1;
+//.		}
+//.}
 __device__ bool compNormal(float4* a, float4* b){
 	return 
 		acos(a->x * b->x + a->y * b->y + a->z * b->z)>0 && 
@@ -197,7 +216,6 @@ __global__ void calculate_nd(int* merged_cluster_label,
 							int* merged_cluster_size, 
 							float* merged_cluster_variance, 
 							float4* input_nd,
-							int sp_size, 
 							int width, int height){
 	int x = (blockIdx.x * blockDim.x + threadIdx.x);
 	int y = (blockIdx.y * blockDim.y + threadIdx.y);
@@ -225,7 +243,7 @@ __global__ void calculate_nd(int* merged_cluster_label,
 	}
 }
 
-void LabelEquivalenceSeg::labelImage(float3* cluster_normals_device, int* cluster_label_device, float3* cluster_centers_device, float* variance_device, int sp_size){
+void LabelEquivalenceSeg::labelImage(float3* cluster_normals_device, int* cluster_label_device, float3* cluster_centers_device, float* variance_device){
 	
 
 	//initialize parameter
@@ -271,7 +289,7 @@ void LabelEquivalenceSeg::labelImage(float3* cluster_normals_device, int* cluste
 			(MergedClusterLabel_Device, InputND_Device, cluster_label_device, cluster_centers_device, sum_of_merged_cluster_normals, sum_of_merged_cluster_centers, merged_cluster_size, width, height);
 	//calculate normal map, plane distance and variance map
 	calculate_nd<<<dim3(width / 32, height / 24), dim3(32, 24)>>>
-			(MergedClusterLabel_Device, ref, MergedClusterND_Device, sum_of_merged_cluster_normals, sum_of_merged_cluster_centers, merged_cluster_size, MergedClusterVariance_Device, InputND_Device, sp_size, width, height);
+			(MergedClusterLabel_Device, ref, MergedClusterND_Device, sum_of_merged_cluster_normals, sum_of_merged_cluster_centers, merged_cluster_size, MergedClusterVariance_Device, InputND_Device, width, height);
 	
 
 	//memcpy
@@ -280,3 +298,54 @@ void LabelEquivalenceSeg::labelImage(float3* cluster_normals_device, int* cluste
 	cudaMemcpy(ref_host, ref, sizeof(int)*width*height, cudaMemcpyDeviceToHost);
 	
 }
+//void LabelEquivalenceSeg::labelImage(float4* cluster_nd_device, int* cluster_label_device, float3* cluster_centers_device){
+//	//initialize parameter
+//	initLabel<<<dim3(width / 32, height / 24), dim3(32, 24)>>>
+//		(InputND_Device, MergedClusterLabel_Device, ref, cluster_nd_device, cluster_label_device, width, height);
+//	for(int i = 0; i < 20; i++){
+//		//scan(cluster_label_device);
+//		scanKernel<<<dim3(width / 32, height / 24), dim3(32, 24)>>>
+//			(InputND_Device, MergedClusterLabel_Device, ref, cluster_label_device, width, height);
+//		//analysis(cluster_label_device);
+//		analysisKernel<<<dim3(width / 32, height / 24), dim3(32, 24)>>>
+//			(MergedClusterLabel_Device, ref, cluster_label_device, width, height);	
+//	}
+//	//init merged_cluster_size
+//	int int_zero = 0;
+//	thrust::fill(
+//		thrust::device_ptr<int>(merged_cluster_size),
+//		thrust::device_ptr<int>(merged_cluster_size) + width * height,
+//		int_zero);
+//	//init normap map, center map
+//	float3 float3_zero;
+//	float3_zero.x = 0.0f;
+//	float3_zero.y = 0.0f;
+//	float3_zero.z = 0.0f;
+//	thrust::fill(
+//		thrust::device_ptr<float3>(sum_of_merged_cluster_normals),
+//		thrust::device_ptr<float3>(sum_of_merged_cluster_normals) + width * height,
+//		float3_zero);
+//	thrust::fill(
+//		thrust::device_ptr<float3>(sum_of_merged_cluster_centers),
+//		thrust::device_ptr<float3>(sum_of_merged_cluster_centers) + width * height,
+//		float3_zero);
+//	//init variance map
+//	float float_zero = 0.0f;
+//	thrust::fill(
+//		thrust::device_ptr<float>(MergedClusterVariance_Device),
+//		thrust::device_ptr<float>(MergedClusterVariance_Device) + width * height,
+//		float_zero);
+//	//calculate each cluster parametor
+//	//count cluster size
+//	countKernel<<<dim3(width / 32, height / 24), dim3(32, 24)>>>
+//			(MergedClusterLabel_Device, InputND_Device, cluster_label_device, cluster_centers_device, sum_of_merged_cluster_normals, sum_of_merged_cluster_centers, merged_cluster_size, width, height);
+//	//calculate normal map, plane distance and variance map
+//	calculate_nd<<<dim3(width / 32, height / 24), dim3(32, 24)>>>
+//			(MergedClusterLabel_Device, ref, MergedClusterND_Device, sum_of_merged_cluster_normals, sum_of_merged_cluster_centers, merged_cluster_size, MergedClusterVariance_Device, InputND_Device, width, height);
+//	
+//
+//	//memcpy
+//	cudaMemcpy(MergedClusterLabel_Host, MergedClusterLabel_Device, sizeof(int)*width*height, cudaMemcpyDeviceToHost);
+//	cudaMemcpy(MergedClusterND_Host, MergedClusterND_Device, sizeof(float4)*width*height, cudaMemcpyDeviceToHost);
+//	cudaMemcpy(ref_host, ref, sizeof(int)*width*height, cudaMemcpyDeviceToHost);
+//}

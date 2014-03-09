@@ -14,11 +14,9 @@ public:
 
 		LabelEquivalenceSeg(int width, int height);
         ~LabelEquivalenceSeg();
-		void labelImage(float3* cluster_normals_device, int* cluster_label_device, float3* cluster_centers_device, float* variance_device, int sp_size);
-		void labelImage(float4* cluster_nd_device, int* cluster_label_device, float3* cluster_center_device);
-		//void labelImage(int rows, int cols, float3* cluster_normals_device, int* cluster_label_device,
-		//					float3* cluster_centers_device, SuperpixelSegmentation::superpixel* sp_data_device);
-        void viewSegmentResult();
+		void labelImage(float3* cluster_normals_device, int* cluster_label_device, float3* cluster_centers_device, float* variance_device);
+		//void labelImage(float4* cluster_nd_device, int* cluster_label_device, float3* cluster_centers_device);
+		void viewSegmentResult();
 		cv::Mat_<cv::Vec3b> getSegmentResult();
 		cv::Mat_<cv::Vec3b>	getNormalImg();
         float4* getMergedClusterND_Device()const;

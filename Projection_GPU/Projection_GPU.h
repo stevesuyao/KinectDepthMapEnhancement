@@ -10,10 +10,13 @@ public:
 	Projection_GPU(int width, int height, const cv::Mat intrinsic);
 	~Projection_GPU();
 	void					PlaneProjection(const float4* nd_device, const int* labels_device, const float* variance_device, const float3* points3d_device);	
+	void					PlaneProjection(const float4* nd_device, const int* labels_device, const float3* points3d_device);	
 	void					PlaneProjection(const float3* normals_device, const float3* centers_device, const int* labels_device, 
 													const float* variance_device, const float3* points3d_device);	
 	float3*					GetPlaneFitted3D_Host()const;
 	float3*					GetPlaneFitted3D_Device()const;
+	float3*					GetOptimized3D_Host()const;
+	float3*					GetOptimized3D_Device()const;
 private:
 	void initMemory();
 	void getProjectedMap();
@@ -28,6 +31,8 @@ private:
 	float3*					PlaneFitted3D_Host;
 	float3*					PlaneFitted3D_Device;
 	float3*					Normalized3D_Device;
+	float3*					Optimized3D_Host;
+	float3*					Optimized3D_Device;
 
 };
 #endif

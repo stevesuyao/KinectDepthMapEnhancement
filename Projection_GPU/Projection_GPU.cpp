@@ -17,6 +17,8 @@ Projection_GPU::~Projection_GPU(){
 	cudaFree(PlaneFitted3D_Host);
 	cudaFree(PlaneFitted3D_Device);
 	cudaFree(Normalized3D_Device);
+	cudaFree(Optimized3D_Host);
+	cudaFree(Optimized3D_Device);
 }
 
 
@@ -24,7 +26,8 @@ void Projection_GPU::initMemory(){
 	cudaMallocHost(&PlaneFitted3D_Host, width * height * sizeof(float3));
 	cudaMalloc(&PlaneFitted3D_Device, width * height * sizeof(float3));
 	cudaMalloc(&Normalized3D_Device, width * height * sizeof(float3));
-
+	cudaMallocHost(&Optimized3D_Host, width * height * sizeof(float3));
+	cudaMalloc(&Optimized3D_Device, width * height * sizeof(float3));
 }
 float3*	Projection_GPU::GetPlaneFitted3D_Host()const{
 	return PlaneFitted3D_Host;
@@ -32,4 +35,10 @@ float3*	Projection_GPU::GetPlaneFitted3D_Host()const{
 
 float3*	Projection_GPU::GetPlaneFitted3D_Device()const{
 	return PlaneFitted3D_Device;
+}
+float3*	Projection_GPU::GetOptimized3D_Host()const{
+	return Optimized3D_Host;
+}
+float3*	Projection_GPU::GetOptimized3D_Device()const{
+	return Optimized3D_Device;
 }

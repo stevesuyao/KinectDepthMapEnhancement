@@ -1,0 +1,145 @@
+﻿2014/03/09 16:50:23 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "D:\Users\Kazuki\Documents\Visual Studio 2010\Projects\KinectDepthmapEnhancement\KinectDepthmapEnhancement\KinectDepthmapEnhancement.vcxproj" (build ターゲット)。
+     1>InitializeBuildStatus:
+         "AlwaysCreate" が指定されたため "x64\Release\KinectDepthmapEnhancement.unsuccessfulbuild" を作成しています。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\include" /Zi /nologo /W3 /WX- /O2 /Oi /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Release\\" /Fd"x64\Release\vc100.pdb" /Gd /TP /errorReport:prompt SPDepthSuperResolution.cpp
+         SPDepthSuperResolution.cpp
+     1>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\include\thrust/system/detail/error_category.inl(102): warning C4996: 'strerror': This function or variable may be unsafe. Consider using strerror_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(157) : 'strerror' の宣言を確認してください。
+     1>C:\ProgramData\NVIDIA Corporation\NVIDIA GPU Computing SDK\C\common\inc\cutil_inline_runtime.h(61): warning C4005: 'MIN' : マクロが再定義されました。
+                 D:\opencv\build\include\opencv2/core/types_c.h(284) : 'MIN' の前の定義を確認してください
+     1>C:\ProgramData\NVIDIA Corporation\NVIDIA GPU Computing SDK\C\common\inc\cutil_inline_runtime.h(62): warning C4005: 'MAX' : マクロが再定義されました。
+                 D:\opencv\build\include\opencv2/core/types_c.h(288) : 'MAX' の前の定義を確認してください
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Users\Kazuki\Documents\Visual Studio 2010\Projects\KinectDepthmapEnhancement\x64\Release\KinectDepthmapEnhancement.exe" /NOLOGO /LIBPATH:"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\lib\x64" glut64.lib PGRFlyCaptureGUI.lib PGRFlyCapture.lib flycapture2_C.lib cublas.lib cuda.lib cudart.lib cufft.lib curand.lib cusparse.lib npp.lib nvcuvenc.lib nvcuvid.lib opencv_calib3d243.lib opencv_contrib243.lib opencv_core243.lib opencv_features2d243.lib opencv_gpu243.lib opencv_highgui243.lib opencv_imgproc243.lib opencv_legacy243.lib opencv_ml243.lib opencv_objdetect243.lib opencv_ts243.lib opencv_video243.lib pcl_apps_release.lib pcl_common_release.lib pcl_features_release.lib pcl_filters_release.lib pcl_io_release.lib pcl_io_ply_release.lib pcl_kdtree_release.lib pcl_keypoints_release.lib pcl_octree_release.lib pcl_registration_release.lib pcl_sample_consensus_release.lib pcl_search_release.lib pcl_segmentation_release.lib pcl_surface_release.lib pcl_tracking_release.lib pcl_visualization_release.lib flann.lib flann_s.lib flann_cpp_s.lib qhull6.lib qhullcpp.lib qhullstatic.lib qhullstatic_p.lib openNI64.lib OpenNI.jni64.lib XnVNITE.jni64.lib XnVNITE64_1_5_2.lib NiSampleModule64.lib NiSampleExtensionModule64.lib MapReduceMPI.lib mpistubs.lib vtkalglib.lib vtkCharts.lib vtkCommon.lib vtkDICOMParser.lib vtkexoIIc.lib vtkexpat.lib vtkFiltering.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGeovis.lib vtkGraphics.lib vtkhdf5.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkjpeg.lib vtklibxml2.lib vtkmetaio.lib vtkNetCDF.lib vtkNetCDF_cxx.lib vtkpng.lib vtkproj4.lib vtkRendering.lib vtksqlite.lib vtksys.lib vtktiff.lib vtkverdict.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib opengl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"x64\Release\KinectDepthmapEnhancement.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Users\Kazuki\Documents\Visual Studio 2010\Projects\KinectDepthmapEnhancement\x64\Release\KinectDepthmapEnhancement.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Users\Kazuki\Documents\Visual Studio 2010\Projects\KinectDepthmapEnhancement\x64\Release\KinectDepthmapEnhancement.lib" /MACHINE:X64 x64\Release\ArrayBuffer.cu.obj
+         x64\Release\Buffer2D.cu.obj
+         x64\Release\DimensionConvertor.cu.obj
+         x64\Release\EdgeRefinedSuperpixel.cu.obj
+         x64\Release\JointBilateralFilter.cu.obj
+         x64\Release\LabelEquivalenceSeg.cu.obj
+         x64\Release\MarkovRandomField.cu.obj
+         x64\Release\IntegralImageGenerator.cu.obj
+         x64\Release\NormalMapGenerator.cu.obj
+         x64\Release\SmoothingAreaMapGenerator.cu.obj
+         x64\Release\Projection_GPU.cu.obj
+         x64\Release\DepthAdaptiveSuperpixel.cu.obj
+         x64\Release\NormalAdaptiveSuperpixel.cu.obj
+         x64\Release\SuperpixelSegmentation.cu.obj
+         x64\Release\ArrayBuffer.obj
+         x64\Release\Buffer2D.obj
+         x64\Release\Cluster.obj
+         x64\Release\DimensionConvertor.obj
+         x64\Release\EdgeRefinedSuperpixel.obj
+         x64\Release\JointBilateralFilter.obj
+         x64\Release\KinectDepthEnhancement.obj
+         x64\Release\Kinect.obj
+         x64\Release\LabelEquivalenceSeg.obj
+         x64\Release\main.obj
+         x64\Release\MarkovRandomField.obj
+         x64\Release\IntegralImageGenerator.obj
+         x64\Release\NormalMapGenerator.obj
+         x64\Release\SmoothingAreaMapGenerator.obj
+         x64\Release\Projection_GPU.obj
+         x64\Release\RegionGrowingBilateralFilter.obj
+         x64\Release\SPDepthSuperResolution.obj
+         x64\Release\DepthAdaptiveSuperpixel.obj
+         x64\Release\NormalAdaptiveSuperpixel.obj
+         x64\Release\SuperpixelSegmentation.obj
+         コード生成しています。
+         コード生成が終了しました。
+         KinectDepthmapEnhancement.vcxproj -> D:\Users\Kazuki\Documents\Visual Studio 2010\Projects\KinectDepthmapEnhancement\x64\Release\KinectDepthmapEnhancement.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\Users\Kazuki\Documents\Visual Studio 2010\Projects\KinectDepthmapEnhancement\x64\Release\KinectDepthmapEnhancement.exe;#1" /manifest x64\Release\KinectDepthmapEnhancement.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         ファイル "x64\Release\KinectDepthmapEnhancement.unsuccessfulbuild" を削除しています。
+         "x64\Release\KinectDepthmapEnhancement.lastbuildstate" のタッチ タスクを実行しています。
+     1>プロジェクト "D:\Users\Kazuki\Documents\Visual Studio 2010\Projects\KinectDepthmapEnhancement\KinectDepthmapEnhancement\KinectDepthmapEnhancement.vcxproj" (build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:07.47
