@@ -47,6 +47,7 @@ void KinectDepthEnhancement::SetParametor(int rows, int cols, cv::Mat_<double> i
 void KinectDepthEnhancement::Process(float* depth_device, float3* points_device, cv::gpu::GpuMat color_device){
 	//normal estimation
 	NormalGenerator->generateNormalMap(points_device);
+	//cv::imshow("nmg", NormalGenerator->getNormalImg());
 	//segmentation
 	SP->Segmentation(color_device, points_device, NormalGenerator->getNormalMap(), 200.0f, 10.0f, 0.0f, 0.0f, 5);
 	NASP->Segmentation(color_device, points_device, NormalGenerator->getNormalMap(), 100.0f, 50.0f, 100.0f, 200.0f, 5);

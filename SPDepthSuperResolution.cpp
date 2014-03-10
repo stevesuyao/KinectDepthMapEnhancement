@@ -6,6 +6,7 @@
 #include "LabelEquivalenceSeg\LabelEquivalenceSeg.h"
 #include "Projection_GPU\Projection_GPU.h"
 #include "Cluster\Cluster.h"
+#include "Kinect\Kinect.h"
 
 SPDepthSuperResolution::SPDepthSuperResolution(int width, int height):
 	Width(width),
@@ -113,6 +114,7 @@ void SPDepthSuperResolution::Process(float* depth_device, float3* points_device,
 			ClusterND_Host[cluster_id].x = nor.x;
 			ClusterND_Host[cluster_id].y = nor.y;
 			ClusterND_Host[cluster_id].z = nor.z;
+			//std::cout << nor.x <<", "<<nor.y<<", "<<nor.z<<std::endl;
 			//•½–Ê‚Ü‚Å‚Ì‹——£Žæ“¾
 			double plane_d = fabs(plane_d_tmp);
 			Cluster_Array[cluster_id].SetPlaneDistance(plane_d);
@@ -138,8 +140,50 @@ void SPDepthSuperResolution::Process(float* depth_device, float3* points_device,
 		//ƒ}ƒbƒv‚ðclear
 		Cluster_Array[cluster_id].ClearCluster3Dpoints();
 	}	
+	//SingleKinect kinect;
+	//for(int y=0; y<Height; y++){
+	//	for(int x=0; x<Width; x++){
+	//		XnPoint3D proj, real;
+	//		proj.X = x;
+	//		proj.Y = y;
+	//		proj.Z = 1;
+	//		kinect.ProjectToReal(proj, real);
+	//		int label = ERS->getRefinedLabels_Host()[y*Width+x];
+	//		if(label != -1 && Cluster_Array[label].canPlane()){
+	//			EdgeEnhanced3DPoints_Host[y*Width+x].z = abs(ClusterND_Host[label].w/(ClusterND_Host[label].x*(float)real.X+
+	//																					ClusterND_Host[label].y*(float)real.Y+
+	//																					ClusterND_Host[label].z));
+	//			//std::cout <<EdgeEnhanced3DPoints_Host[y*Width+x].z<<", "<<ClusterND_Host[label].w<<std::endl;
+	//			EdgeEnhanced3DPoints_Host[y*Width+x].x = EdgeEnhanced3DPoints_Host[y*Width+x].z*(float)real.X;
+	//			EdgeEnhanced3DPoints_Host[y*Width+x].y = EdgeEnhanced3DPoints_Host[y*Width+x].z*(float)real.Y;
+	//		}
+	//		else{
+	//			EdgeEnhanced3DPoints_Host[y*Width+x].x = 0.0f;
+	//			EdgeEnhanced3DPoints_Host[y*Width+x].y = 0.0f;
+	//			EdgeEnhanced3DPoints_Host[y*Width+x].z = 0.0f;
+	//		}
+	//	}
+	//}
+	//cudaMemcpy(EdgeEnhanced3DPoints_Device, EdgeEnhanced3DPoints_Host, sizeof(float3)*Width*Height, cudaMemcpyHostToDevice);
+
 	cudaMemcpy(ClusterND_Device, ClusterND_Host, sizeof(float4)*sp_rows*sp_cols, cudaMemcpyHostToDevice);
 	cudaMemcpy(ClusterCenter_Device, ClusterCenter_Host, sizeof(float3)*sp_rows*sp_cols, cudaMemcpyHostToDevice);
+	//cv::Mat_<cv::Vec3b> normalImage(Height, Width);
+	//for(int y=0; y<Height; y++){
+	//	for(int x=0; x<Width; x++){
+	//		int id = ERS->getRefinedLabels_Host()[y*Width+x];
+	//		if(id==-1)
+	//			normalImage.at<cv::Vec3b>(y,x) = cv::Vec3b(0, 0, 0);
+	//		else{
+	//			//std::cout << ClusterND_Host[id].x << ", "<<ClusterND_Host[id].y <<", "<<ClusterND_Host[id].z <<std::endl;
+	//			normalImage.at<cv::Vec3b>(y,x).val[0] = (unsigned char)(255.0f*(ClusterND_Host[id].x+1.0f)/2.0f);
+	//			normalImage.at<cv::Vec3b>(y,x).val[1] = (unsigned char)(255.0f*(ClusterND_Host[id].y+1.0f)/2.0f);
+	//			normalImage.at<cv::Vec3b>(y,x).val[2] = (unsigned char)(255.0f*(ClusterND_Host[id].z+1.0f)/2.0f);
+	//		}
+	//	}
+	//}
+	//cv::imshow("normal_cluster", normalImage);
+	//cv::waitKey(0);
 	//superpixel merging
 	//spMerging->labelImage(ClusterND_Device, ERS->getRefinedLabels_Device(), ClusterCenter_Device);
 	//plane projection

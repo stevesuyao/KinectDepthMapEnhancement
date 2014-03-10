@@ -62,18 +62,12 @@ __global__ void setPsuedoDepth(
 	int x = blockIdx.x * blockDim.x + threadIdx.x;
 	int y = blockIdx.y * blockDim.y + threadIdx.y;
 
-
 	int l = labels[x + y * width];
-	//float a = nd[l].x;
-	//float b = nd[l].y;
-	//float c = nd[l].z;
-	//float d = nd[l].w;
-	if(l > -1 && abs((float)nd[y*width+x].x)<1.0f){
-		float a = nd[y*width+x].x;
-		float b = nd[y*width+x].y;
-		float c = nd[y*width+x].z;
-		float d = nd[y*width+x].w;
-
+	float a = nd[l].x;
+	float b = nd[l].y;
+	float c = nd[l].z;
+	float d = nd[l].w;
+	if(l > -1 && abs((float)nd[l].x)<1.0f){
 		float3* ref = &plane_fitted[x + y * width];
 		ref->z = abs(d / (a * normalized[x + y * width].x + b * normalized[x + y * width].y + c));
 		ref->x = ref->z*normalized[x + y * width].x;
@@ -164,7 +158,7 @@ __global__ void mrf_optimization(
 		int x = blockIdx.x * blockDim.x + threadIdx.x;
 		int y = blockIdx.y * blockDim.y + threadIdx.y;
 
-		if(planefitted3d[y*width+x].z > 50.0f){
+		if(planefitted3d[y*width+x].z > 50.0f && fabs(optimized3d[y*width+x].z-planefitted3d[y*width+x].z) < optimized3d[y*width+x].z*0.01f){
 		//mrf optimization
 		float numerator = planefitted3d[y*width+x].z, denominator = 1.0f;
 		for(int i = - window_size/2; i <= window_size/2; i++){		// y
@@ -224,8 +218,8 @@ void Projection_GPU::PlaneProjection(const float4* nd_device, const int* labels_
 	setPsuedoDepth<<<dim3(width / 32, height / 24), dim3(32, 24)>>>
 		(points3d_device, PlaneFitted3D_Device, Normalized3D_Device, nd_device, labels_device, variance_device, width, height);
 
-	////optimization
-	//cudaMemcpy(Optimized3D_Device, points3d_device, width * height * sizeof(float3), cudaMemcpyDeviceToDevice);
+	//optimization
+	cudaMemcpy(Optimized3D_Device, points3d_device, width * height * sizeof(float3), cudaMemcpyDeviceToDevice);
 	//for(int i=0; i<20; i++){
 	//mrf_optimization<<<dim3(width / 32, height / 24), dim3(32, 24)>>>
 	//		(Optimized3D_Device, PlaneFitted3D_Device, Normalized3D_Device, labels_device, width, height, 5, 0.5f, 1.0f);
@@ -248,11 +242,11 @@ void Projection_GPU::PlaneProjection(const float4* nd_device, const int* labels_
 
 	//optimization
 	cudaMemcpy(Optimized3D_Device, points3d_device, width * height * sizeof(float3), cudaMemcpyDeviceToDevice);
-	//for(int i=0; i<20; i++){
-	//mrf_optimization<<<dim3(width / 32, height / 24), dim3(32, 24)>>>
-	//		(Optimized3D_Device, PlaneFitted3D_Device, Normalized3D_Device, labels_device, width, height, 5, 0.5f, 1.0f);
-	//}
-
+	for(int i=0; i<20; i++){
+	mrf_optimization<<<dim3(width / 32, height / 24), dim3(32, 24)>>>
+			(Optimized3D_Device, PlaneFitted3D_Device, Normalized3D_Device, labels_device, width, height, 5, 0.5f, 1.0f);
+	}
+	//cudaMemcpy(Optimized3D_Device, PlaneFitted3D_Device, width * height * sizeof(float3), cudaMemcpyDeviceToDevice);
 	//variance_optimization<<<dim3(width / 32, height / 24), dim3(32, 24)>>>
 	//		(Optimized3D_Device, variance_device, PlaneFitted3D_Device, Normalized3D_Device, labels_device, width, height);
 

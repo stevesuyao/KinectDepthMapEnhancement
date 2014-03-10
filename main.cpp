@@ -20,6 +20,7 @@
 #include "RegionGrowingBilateralFilter.h"
 #include "KinectDepthEnhancement.h"
 #include "SPDepthSuperResolution.h"
+#include "TOFDepthInterpolation.h"
 
 float color_sigma = 250.0f;
 float spatial_sigma = 15.0f;
@@ -63,6 +64,9 @@ int main(){
 	//super-pixel based depth image super-resolution
 	SPDepthSuperResolution SPDSP(Kinect::Width, Kinect::Height);
 	SPDSP.SetParametor(sp_rows, sp_cols, kinect.GetIntrinsicMatrix());
+	//TOF depth interpolation
+	TOFDepthInterpolation TOF(Kinect::Width, Kinect::Height);
+	TOF.SetParametor(sp_rows, sp_cols, kinect.GetIntrinsicMatrix());
 	//////////////////////////////////////////////////////capture///////////////////////////////////////////////////////////
 	if(capture){
 		int count=0;
@@ -129,13 +133,16 @@ int main(){
 	convertor.projectiveToReal(RGBF.getRefinedDepth_Device(), refinedPoints_Device);
 	convertor.projectiveToReal(MRF.getFiltered_Device(), points_Device);
 	cudaMemcpy(refinedPoints_Host, refinedPoints_Device, sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
-	cudaMemcpy(points_Host, points_Device, sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
+	//cudaMemcpy(points_Host, points_Device, sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
 	//Denoising of kinect depth map using piecewise planar surface
 	KDE.Process(inputDepth_Device, points_Device, Color_Device);
-	cudaMemcpy(points_Host, KDE.getOptimizedPoints_Device(), sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
+	//cudaMemcpy(points_Host, KDE.getOptimizedPoints_Device(), sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
 	//Superpixel based depth image super-resolution
 	SPDSP.Process(inputDepth_Device, points_Device, Color_Device);
-	cudaMemcpy(points_Host, SPDSP.getOptimizedPoints_Device(), sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
+	//cudaMemcpy(points_Host, SPDSP.getOptimizedPoints_Device(), sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
+	//TOF depth interpolation
+	TOF.Process(inputDepth_Device, points_Device, Color_Device);
+	cudaMemcpy(points_Host, TOF.getOptimizedPoints_Device(), sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
 	//////////////////////////////////////////////////////////////////////output//////////////////////////////////////////////////////////////////
 	//visualize
 	pcl::PointCloud<pcl::PointXYZRGB>::Ptr input (new pcl::PointCloud<pcl::PointXYZRGB>);
@@ -169,13 +176,13 @@ int main(){
 			//	point.z = (float)real.Z/1000.0f;
 			//	averaged->push_back(point);
 			//}
-			if(points_Host[y*Kinect::Width+x].z > 50.0f){
+			if(points_Host[y*Kinect::Width+x].z > 50.0f && points_Host[y*Kinect::Width+x].z < 10000.0f){
 				point.x = points_Host[y*Kinect::Width+x].x/1000.0f;
 				point.y = points_Host[y*Kinect::Width+x].y/1000.0f;
 				point.z = points_Host[y*Kinect::Width+x].z/1000.0f;	
 				input->push_back(point);
 			}
-			if(refinedPoints_Host[y*Kinect::Width+x].z >50.0f){
+			if(refinedPoints_Host[y*Kinect::Width+x].z >50.0f && refinedPoints_Host[y*Kinect::Width+x].z < 10000.0f){
 				point.x = refinedPoints_Host[y*Kinect::Width+x].x/1000.0f;
 				point.y = refinedPoints_Host[y*Kinect::Width+x].y/1000.0f;
 				point.z = refinedPoints_Host[y*Kinect::Width+x].z/1000.0f;	
