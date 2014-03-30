@@ -61,12 +61,12 @@ int main(){
 	//kinect depth map enhancement
 	KinectDepthEnhancement KDE(Kinect::Width, Kinect::Height);
 	KDE.SetParametor(sp_rows, sp_cols, kinect.GetIntrinsicMatrix());
-	//super-pixel based depth image super-resolution
-	SPDepthSuperResolution SPDSP(Kinect::Width, Kinect::Height);
-	SPDSP.SetParametor(sp_rows, sp_cols, kinect.GetIntrinsicMatrix());
-	//TOF depth interpolation
-	TOFDepthInterpolation TOF(Kinect::Width, Kinect::Height);
-	TOF.SetParametor(sp_rows, sp_cols, kinect.GetIntrinsicMatrix());
+	////super-pixel based depth image super-resolution
+	//SPDepthSuperResolution SPDSP(Kinect::Width, Kinect::Height);
+	//SPDSP.SetParametor(sp_rows, sp_cols, kinect.GetIntrinsicMatrix());
+	////TOF depth interpolation
+	//TOFDepthInterpolation TOF(Kinect::Width, Kinect::Height);
+	//TOF.SetParametor(sp_rows, sp_cols, kinect.GetIntrinsicMatrix());
 	//////////////////////////////////////////////////////capture///////////////////////////////////////////////////////////
 	if(capture){
 		int count=0;
@@ -119,7 +119,7 @@ int main(){
 			}
 		}
 	cudaMemcpy(inputDepth_Device, inputDepth_Host, sizeof(float)*Kinect::Width*Kinect::Height, cudaMemcpyHostToDevice);
-	cudaMemcpy(bufferDepth_Host, bufferDepth_Device, sizeof(float)*Kinect::Width*Kinect::Height, cudaMemcpyHostToDevice);
+	cudaMemcpy(bufferDepth_Device, bufferDepth_Host, sizeof(float)*Kinect::Width*Kinect::Height, cudaMemcpyHostToDevice);
 	Color_Device.upload(color);
 	///////////////////////////////////////////////////////////////////processing//////////////////////////////////////////////
 	//JBF
@@ -127,22 +127,23 @@ int main(){
 	//MRF
 	MRF.Process(inputDepth_Device, Color_Device);
 	//project to real
-	convertor.projectiveToReal(inputDepth_Device, points_Device);
+	convertor.projectiveToReal(JBF.getFiltered_Device(), points_Device);
+	cudaMemcpy(points_Host, points_Device, sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
 	//region growing bilateral filter
 	RGBF.Process(inputDepth_Device, points_Device, Color_Device);
 	convertor.projectiveToReal(RGBF.getRefinedDepth_Device(), refinedPoints_Device);
-	convertor.projectiveToReal(MRF.getFiltered_Device(), points_Device);
+	//convertor.projectiveToReal(MRF.getFiltered_Device(), points_Device);
 	cudaMemcpy(refinedPoints_Host, refinedPoints_Device, sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
-	//cudaMemcpy(points_Host, points_Device, sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
+	cudaMemcpy(points_Host, points_Device, sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
 	//Denoising of kinect depth map using piecewise planar surface
-	KDE.Process(inputDepth_Device, points_Device, Color_Device);
-	//cudaMemcpy(points_Host, KDE.getOptimizedPoints_Device(), sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
-	//Superpixel based depth image super-resolution
-	SPDSP.Process(inputDepth_Device, points_Device, Color_Device);
+	KDE.Process(inputDepth_Device, Color_Device);
+	//cudaMemcpy(refinedPoints_Host, KDE.getOptimizedPoints_Device(), sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
+	////Superpixel based depth image super-resolution
+	//SPDSP.Process(inputDepth_Device, points_Device, Color_Device);
 	//cudaMemcpy(points_Host, SPDSP.getOptimizedPoints_Device(), sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
-	//TOF depth interpolation
-	TOF.Process(inputDepth_Device, points_Device, Color_Device);
-	cudaMemcpy(points_Host, TOF.getOptimizedPoints_Device(), sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
+	////TOF depth interpolation
+	////TOF.Process(inputDepth_Device, points_Device, Color_Device);
+	//cudaMemcpy(points_Host, TOF.getOptimizedPoints_Device(), sizeof(float3)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
 	//////////////////////////////////////////////////////////////////////output//////////////////////////////////////////////////////////////////
 	//visualize
 	pcl::PointCloud<pcl::PointXYZRGB>::Ptr input (new pcl::PointCloud<pcl::PointXYZRGB>);
@@ -151,9 +152,9 @@ int main(){
 	for(int y=0; y<Kinect::Height; y++){
 		for(int x=0; x<Kinect::Width; x++){
 			pcl::PointXYZRGB point;
-			point.r = color.at<cv::Vec3b>(y, x).val[0];
+			point.r = color.at<cv::Vec3b>(y, x).val[2];
 			point.g = color.at<cv::Vec3b>(y, x).val[1];
-			point.b = color.at<cv::Vec3b>(y, x).val[2];
+			point.b = color.at<cv::Vec3b>(y, x).val[0];
 			//if(depth.at<float>(y, x) > 50.0f){
 			//	XnPoint3D proj, real;
 			//	proj.X = x;

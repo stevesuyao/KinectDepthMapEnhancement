@@ -1,28 +1,39 @@
 #include "EdgeRefinedSuperpixel.h"
 #include <ctime>
 
-const int EdgeRefinedSuperpixel::WindowSize = 15;
-const float EdgeRefinedSuperpixel::SpatialSigma = 70.0f;
+const int EdgeRefinedSuperpixel::WindowSize = 7;
+const float EdgeRefinedSuperpixel::SpatialSigma = 30.0f;
 const float EdgeRefinedSuperpixel::ColorSigma = 50.0f;
-const float EdgeRefinedSuperpixel::DepthSigma = 20.0f;
+const float EdgeRefinedSuperpixel::DepthSigma = 70.0f;
 
 EdgeRefinedSuperpixel::EdgeRefinedSuperpixel(int width, int height):
 	Width(width),
 	Height(height),
-	segmentedImage(Height, Width){
+	segmentedImage(Height, Width),
+	SegmentedRandomColor(height, width),
+	SegmentedColor(height, width){
 		SpatialFilter_Host = new float[WindowSize*WindowSize];
 		cudaMalloc(&SpatialFilter_Device, sizeof(float)*WindowSize*WindowSize);
 		cudaMallocHost(&refinedLabels_Host, sizeof(int)*width*height);
 		cudaMalloc(&refinedLabels_Device, sizeof(int)*width*height);
 		cudaMallocHost(&refinedDepth_Host, sizeof(float)*width*height);
 		cudaMalloc(&refinedDepth_Device, sizeof(float)*width*height);
+		RandomColors = new int3[width*height];
 		calcSpatialFilter();
+		for(int i=0; i<width*height; i++){
+		int3 tmp;
+		tmp.x = rand()%255;
+		tmp.y = rand()%255;
+		tmp.z = rand()%255;
+		RandomColors[i] = tmp;
+	}
 		//cudaMallocHost(&colorLabels_Host, sizeof(int)*width*height);
 		//cudaMallocHost(&depthLabels_Host, sizeof(int)*width*height);
 		//cudaMallocHost(&Depth_Host, sizeof(float)*width*height);
 	}
 EdgeRefinedSuperpixel::~EdgeRefinedSuperpixel(){
 	delete [] SpatialFilter_Host;
+	delete [] RandomColors;
 	cudaFree(SpatialFilter_Device);
 	cudaFree(refinedLabels_Host);
 	cudaFree(refinedLabels_Device);
@@ -98,4 +109,40 @@ void EdgeRefinedSuperpixel::getRGB(float ratio, cv::Vec3b& color){
 		color.val[1] = (unsigned char)((0.99f-ratio)/0.33f * 255.0f);
 		color.val[2] = (unsigned char)((ratio-=0.66f)/0.33f * 255.0f);
 	}
+}
+cv::Mat_<cv::Vec3b> EdgeRefinedSuperpixel::getSegmentedImage(cv::Mat_<cv::Vec3b> input_host){
+	
+	input_host.copyTo(SegmentedColor);
+
+	for(int y=0; y<Height-1; y++){
+		for(int x=0; x<Width-1; x++){
+			if(refinedLabels_Host[y*Width+x] !=  refinedLabels_Host[(y+1)*Width+x]){
+				//SegmentedColor.at<cv::Vec3b>(y, x) = cv::Vec3b(0, 0, 0);
+				SegmentedColor.at<cv::Vec3b>(y, x) = cv::Vec3b(255, 255, 255);
+			}
+			if(refinedLabels_Host[y*Width+x] !=  refinedLabels_Host[y*Width+x+1]){
+				//SegmentedColor.at<cv::Vec3b>(y, x) = cv::Vec3b(0, 0, 0);
+				SegmentedColor.at<cv::Vec3b>(y, x) = cv::Vec3b(255, 255, 255);
+			}
+		}
+	}
+	return SegmentedColor;
+}
+
+cv::Mat_<cv::Vec3b> EdgeRefinedSuperpixel::getRandomColorImage(){
+	
+	for(int y=0; y<Height; y++){
+		for(int x=0; x<Width; x++){
+			int id = refinedLabels_Host[y*Width+x];
+			if(id != -1){
+				SegmentedRandomColor.at<cv::Vec3b>(y, x).val[0] = (unsigned char)RandomColors[id].x;
+				SegmentedRandomColor.at<cv::Vec3b>(y, x).val[1] = (unsigned char)RandomColors[id].y;
+				SegmentedRandomColor.at<cv::Vec3b>(y, x).val[2] = (unsigned char)RandomColors[id].z;
+			}
+			else
+				SegmentedRandomColor.at<cv::Vec3b>(y, x) = cv::Vec3b(0, 0, 0);
+		}
+	}
+	
+	return SegmentedRandomColor;
 }

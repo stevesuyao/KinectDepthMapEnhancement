@@ -21,6 +21,8 @@ public:
 	float*	getRefinedDepth_Device();
 	float*	getRefinedDepth_Host();
 	cv::Mat_<cv::Vec3b> getSegmentedImage(const int max_depth);
+	cv::Mat_<cv::Vec3b> getSegmentedImage(cv::Mat_<cv::Vec3b> input_host);
+	cv::Mat_<cv::Vec3b> getRandomColorImage();
 private:
 	static const int	WindowSize;
 	static const float	SpatialSigma;
@@ -37,8 +39,8 @@ private:
 	void				calcSpatialFilter();
 	cv::Mat_<cv::Vec3b> segmentedImage;
 	void getRGB(float ratio, cv::Vec3b& color);
-	//int*	colorLabels_Host;
-	//int*	depthLabels_Host;
-	//float*	Depth_Host;
+	cv::Mat_<cv::Vec3b>			SegmentedRandomColor;
+	cv::Mat_<cv::Vec3b>			SegmentedColor;
+	int3*						RandomColors;
 };
 #endif

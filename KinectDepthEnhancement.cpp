@@ -5,12 +5,16 @@
 #include "NormalEstimation\NormalMapGenerator.h"
 #include "LabelEquivalenceSeg\LabelEquivalenceSeg.h"
 #include "Projection_GPU\Projection_GPU.h"
+#include "SuperpixelSegmentation\DepthAdaptiveSuperpixel.h"
+#include "JointBilateralFilter\JointBilateralFilter.h"
 
 KinectDepthEnhancement::KinectDepthEnhancement(int width, int height):
 	Width(width),
 	Height(height){
+		SP = new DepthAdaptiveSuperpixel(width, height);
+		DASP = new DepthAdaptiveSuperpixel(width, height);
 		NASP = new NormalAdaptiveSuperpixel(width, height);
-		SP = new NormalAdaptiveSuperpixel(width, height);
+		JBF = new JointBilateralFilter(width, height);
 		ERS = new EdgeRefinedSuperpixel(width, height);
 		Convertor = new DimensionConvertor();
 		NormalGenerator = new NormalMapGenerator(width, height);
@@ -19,10 +23,14 @@ KinectDepthEnhancement::KinectDepthEnhancement(int width, int height):
 	
 	}
 KinectDepthEnhancement::~KinectDepthEnhancement(){
-	delete NASP;
-	NASP = 0;
 	delete SP;
 	SP = 0;
+	delete DASP;
+	DASP = 0;
+	delete NASP;
+	NASP = 0;
+	delete JBF;
+	JBF = 0;
 	delete ERS;
 	ERS = 0;
 	delete NormalGenerator;
@@ -39,24 +47,30 @@ void KinectDepthEnhancement::SetParametor(int rows, int cols, cv::Mat_<double> i
 	sp_rows = rows;
 	sp_cols = cols;
 	SP->SetParametor(sp_rows, sp_cols, intrinsic);
+	DASP->SetParametor(sp_rows, sp_cols, intrinsic);
 	NASP->SetParametor(sp_rows, sp_cols, intrinsic);
 	Convertor->setCameraParameters(intrinsic, Width, Height);
 	NormalGenerator->setNormalEstimationMethods(NormalGenerator->CM);
 	Projector = new Projection_GPU(Width, Height, intrinsic);
 }
-void KinectDepthEnhancement::Process(float* depth_device, float3* points_device, cv::gpu::GpuMat color_device){
-	//normal estimation
-	NormalGenerator->generateNormalMap(points_device);
-	//cv::imshow("nmg", NormalGenerator->getNormalImg());
+void KinectDepthEnhancement::Process(float* depth_device, cv::gpu::GpuMat color_device){
 	//segmentation
-	SP->Segmentation(color_device, points_device, NormalGenerator->getNormalMap(), 200.0f, 10.0f, 0.0f, 0.0f, 5);
-	NASP->Segmentation(color_device, points_device, NormalGenerator->getNormalMap(), 100.0f, 50.0f, 100.0f, 200.0f, 5);
+	SP->Segmentation(color_device, EdgeEnhanced3DPoints_Device, 200.0f, 1.0f, 0.0f, 5);
+	//DASP->Segmentation(color_device, EdgeEnhanced3DPoints_Device, 0.0f, 10.0f, 200.0f, 5);
+	JBF->Process(depth_device, color_device);
+	//convert to realworld
+	Convertor->projectiveToReal(JBF->getFiltered_Device(), EdgeEnhanced3DPoints_Device);
+	//normal estimation
+	NormalGenerator->generateNormalMap(EdgeEnhanced3DPoints_Device);
+	//cv::imshow("nmg", NormalGenerator->getNormalImg());
+	NASP->Segmentation(color_device, EdgeEnhanced3DPoints_Device, NormalGenerator->getNormalMap(), 50.0f, 1.0f, 100.0f, 200.0f, 5);
 	//edge refinement
 	ERS->EdgeRefining(SP->getLabelDevice(), NASP->getLabelDevice(), depth_device, color_device);
-	//convert to realworld
-	Convertor->projectiveToReal(ERS->getRefinedDepth_Device(), EdgeEnhanced3DPoints_Device);
+	////convert to realworld
+	//Convertor->projectiveToReal(ERS->getRefinedDepth_Device(), EdgeEnhanced3DPoints_Device);
 	//superpixel merging
 	spMerging->labelImage(NASP->getNormalsDevice(), ERS->getRefinedLabels_Device(), NASP->getCentersDevice(), NASP->getNormalsVarianceDevice());
+	//spMerging->labelImage(NASP->getNormalsDevice(), NASP->getLabelDevice(), NASP->getCentersDevice(), NASP->getNormalsVarianceDevice());
 	//plane projection
 	Projector->PlaneProjection(spMerging->getMergedClusterND_Device(), spMerging->getMergedClusterLabel_Device(), spMerging->getMergedClusterVariance_Device(), EdgeEnhanced3DPoints_Device);
 }

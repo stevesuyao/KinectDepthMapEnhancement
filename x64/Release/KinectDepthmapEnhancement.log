@@ -1,4 +1,4 @@
-﻿2014/03/09 16:50:23 にビルドを開始しました。
+﻿2014/03/30 22:04:15 にビルドを開始しました。
      1>ノード 2 上のプロジェクト "D:\Users\Kazuki\Documents\Visual Studio 2010\Projects\KinectDepthmapEnhancement\KinectDepthmapEnhancement\KinectDepthmapEnhancement.vcxproj" (build ターゲット)。
      1>InitializeBuildStatus:
          "AlwaysCreate" が指定されたため "x64\Release\KinectDepthmapEnhancement.unsuccessfulbuild" を作成しています。
@@ -30,6 +30,14 @@
        すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
        AddCudaCompileDeps:
        すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
+       AddCudaCompileDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
        AddCudaCompilePropsDeps:
        すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
        AddCudaCompilePropsDeps:
@@ -58,6 +66,22 @@
        すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
        AddCudaCompilePropsDeps:
        すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       AddCudaCompilePropsDeps:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
+       CudaBuild:
+       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
        CudaBuild:
        すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
        CudaBuild:
@@ -87,49 +111,215 @@
        CudaBuild:
        すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\include" /Zi /nologo /W3 /WX- /O2 /Oi /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Release\\" /Fd"x64\Release\vc100.pdb" /Gd /TP /errorReport:prompt SPDepthSuperResolution.cpp
-         SPDepthSuperResolution.cpp
-     1>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\include\thrust/system/detail/error_category.inl(102): warning C4996: 'strerror': This function or variable may be unsafe. Consider using strerror_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(157) : 'strerror' の宣言を確認してください。
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\include" /Zi /nologo /W3 /WX- /O2 /Oi /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Release\\" /Fd"x64\Release\vc100.pdb" /Gd /TP /errorReport:prompt main.cpp
+         main.cpp
      1>C:\ProgramData\NVIDIA Corporation\NVIDIA GPU Computing SDK\C\common\inc\cutil_inline_runtime.h(61): warning C4005: 'MIN' : マクロが再定義されました。
                  D:\opencv\build\include\opencv2/core/types_c.h(284) : 'MIN' の前の定義を確認してください
      1>C:\ProgramData\NVIDIA Corporation\NVIDIA GPU Computing SDK\C\common\inc\cutil_inline_runtime.h(62): warning C4005: 'MAX' : マクロが再定義されました。
                  D:\opencv\build\include\opencv2/core/types_c.h(288) : 'MAX' の前の定義を確認してください
+     1>D:\Program Files\PCL 1.6.0\include\pcl-1.6\pcl/point_traits.h : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+     1>D:\Program Files\PCL 1.6.0\include\pcl-1.6\pcl/point_cloud.h(1021): warning C4521: 'pcl::PointCloud<Eigen::MatrixXf>' : 複数のコピー コンストラクターが指定されています。
+     1>D:\Program Files\PCL 1.6.0\include\pcl-1.6\pcl/point_traits.h : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+     1>D:\Program Files\PCL 1.6.0\include\pcl-1.6\pcl/point_traits.h : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+     1>D:\Program Files\PCL 1.6.0\include\pcl-1.6\pcl/point_cloud.h(603): warning C4521: 'pcl::PointCloud<PointT>' : 複数のコピー コンストラクターが指定されています。
+                 with
+                 [
+                     PointT=pcl::PointXYZ
+                 ]
+                 D:\Program Files\PCL 1.6.0\include\pcl-1.6\pcl/visualization/pcl_visualizer.h(501) : コンパイルされたクラスの テンプレート のインスタンス化 'pcl::PointCloud<PointT>' の参照を確認してください
+                 with
+                 [
+                     PointT=pcl::PointXYZ
+                 ]
+     1>D:\Program Files\PCL 1.6.0\include\pcl-1.6\pcl/point_cloud.h(603): warning C4521: 'pcl::PointCloud<PointT>' : 複数のコピー コンストラクターが指定されています。
+                 with
+                 [
+                     PointT=pcl::Normal
+                 ]
+                 D:\Program Files\PCL 1.6.0\include\pcl-1.6\pcl/visualization/pcl_visualizer.h(502) : コンパイルされたクラスの テンプレート のインスタンス化 'pcl::PointCloud<PointT>' の参照を確認してください
+                 with
+                 [
+                     PointT=pcl::Normal
+                 ]
+     1>D:\Program Files\PCL 1.6.0\include\pcl-1.6\pcl/point_cloud.h(603): warning C4521: 'pcl::PointCloud<PointT>' : 複数のコピー コンストラクターが指定されています。
+                 with
+                 [
+                     PointT=pcl::PrincipalCurvatures
+                 ]
+                 D:\Program Files\PCL 1.6.0\include\pcl-1.6\pcl/visualization/pcl_visualizer.h(503) : コンパイルされたクラスの テンプレート のインスタンス化 'pcl::PointCloud<PointT>' の参照を確認してください
+                 with
+                 [
+                     PointT=pcl::PrincipalCurvatures
+                 ]
+     1>D:\Program Files\PCL 1.6.0\include\pcl-1.6\pcl/point_cloud.h(603): warning C4521: 'pcl::PointCloud<PointT>' : 複数のコピー コンストラクターが指定されています。
+                 with
+                 [
+                     PointT=pcl::PointXYZRGB
+                 ]
+                 D:\Program Files\PCL 1.6.0\include\pcl-1.6\pcl/visualization/pcl_visualizer.h(724) : コンパイルされたクラスの テンプレート のインスタンス化 'pcl::PointCloud<PointT>' の参照を確認してください
+                 with
+                 [
+                     PointT=pcl::PointXYZRGB
+                 ]
+     1>D:\Program Files\PCL 1.6.0\include\pcl-1.6\pcl/point_cloud.h(603): warning C4521: 'pcl::PointCloud<PointT>' : 複数のコピー コンストラクターが指定されています。
+                 with
+                 [
+                     PointT=pcl::PointXYZRGBA
+                 ]
+                 D:\Program Files\PCL 1.6.0\include\pcl-1.6\pcl/visualization/pcl_visualizer.h(737) : コンパイルされたクラスの テンプレート のインスタンス化 'pcl::PointCloud<PointT>' の参照を確認してください
+                 with
+                 [
+                     PointT=pcl::PointXYZRGBA
+                 ]
+     1>d:\program files\pcl 1.6.0\3rdparty\eigen\include\eigen\src/Geometry/OrthoMethods.h(99): warning C4305: 'specialization' : 'const unsigned int' から 'bool' へ切り詰めます。
+                 D:\Program Files\PCL 1.6.0\include\pcl-1.6\pcl/common/distances.h(73) : コンパイルされたクラスの テンプレート のインスタンス化 'Eigen::Matrix<_Scalar,_Rows,_Cols> Eigen::MatrixBase<Derived>::cross3<Eigen::CwiseBinaryOp<BinaryOp,Lhs,Rhs>>(const Eigen::MatrixBase<Eigen::CwiseBinaryOp<BinaryOp,Lhs,Rhs>> &) const' の参照を確認してください
+                 with
+                 [
+                     _Scalar=float,
+                     _Rows=4,
+                     _Cols=1,
+                     Derived=Eigen::Matrix<float,4,1>,
+                     BinaryOp=Eigen::internal::scalar_difference_op<float>,
+                     Lhs=const Eigen::Matrix<float,4,1>,
+                     Rhs=const Eigen::Matrix<float,4,1>
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree<_Traits>::erase' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Traits=std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>>>>>>,false>
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree<_Traits>::erase' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Traits=std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>>>>>>,false>
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree<_Traits>::erase' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Traits=std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>>>>>>,false>
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree<_Traits>::erase' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Traits=std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>>>>>>,false>
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree<_Traits>::erase' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Traits=std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>>>>>>,false>
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree<_Traits>::erase' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Traits=std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>>>>>>,false>
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree_const_iterator<_Mytree>::_Tree_const_iterator' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Mytree=std::_Tree_val<std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>>>>>>,false>>
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree_iterator<_Mytree>::_Tree_iterator' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Mytree=std::_Tree_val<std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>>>>>>,false>>
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree_const_iterator<_Mytree>::_Tree_const_iterator' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Mytree=std::_Tree_val<std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>>>>>>,false>>
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree_iterator<_Mytree>::_Tree_iterator' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Mytree=std::_Tree_val<std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>>>>>>,false>>
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree_const_iterator<_Mytree>::_Tree_const_iterator' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Mytree=std::_Tree_val<std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>>>>>>,false>>
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree_iterator<_Mytree>::_Tree_iterator' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Mytree=std::_Tree_val<std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>>>>>>,false>>
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree_unchecked_const_iterator<_Mytree,_Base>::_Tree_unchecked_const_iterator' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Mytree=std::_Tree_val<std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>>>>>>,false>>,
+                     _Base=std::_Iterator_base
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree_unchecked_const_iterator<_Mytree,_Base>::_Tree_unchecked_const_iterator' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Mytree=std::_Tree_val<std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>>>>>>,false>>,
+                     _Base=std::_Iterator_base
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree_unchecked_const_iterator<_Mytree,_Base>::_Tree_unchecked_const_iterator' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Mytree=std::_Tree_val<std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>>>>>>,false>>,
+                     _Base=std::_Iterator_base
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree_val<_Traits>::_Buynode' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Traits=std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::MouseEvent &,boost::function<void (const pcl::visualization::MouseEvent &)>>,boost::signals2::mutex>>>>>>>,false>
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree_val<_Traits>::_Buynode' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Traits=std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::KeyboardEvent &,boost::function<void (const pcl::visualization::KeyboardEvent &)>>,boost::signals2::mutex>>>>>>>,false>
+                 ]
+     1>D:\Program Files\PCL 1.6.0\3rdParty\Boost\include\boost/variant/variant.hpp(1178): warning C4503: 'std::_Tree_val<_Traits>::_Buynode' : 装飾された名前の長さが限界を超えました。名前は切り捨てられます。
+                 with
+                 [
+                     _Traits=std::_Tmap_traits<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>>>>,boost::signals2::detail::group_key_less<int,std::less<int>>,std::allocator<std::pair<const std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,std::_List_iterator<std::_List_val<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>,std::allocator<boost::shared_ptr<boost::signals2::detail::connection_body<std::pair<boost::signals2::detail::slot_meta_group,boost::optional<int>>,boost::signals2::slot1<void,const pcl::visualization::PointPickingEvent &,boost::function<void (const pcl::visualization::PointPickingEvent &)>>,boost::signals2::mutex>>>>>>>,false>
+                 ]
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Users\Kazuki\Documents\Visual Studio 2010\Projects\KinectDepthmapEnhancement\x64\Release\KinectDepthmapEnhancement.exe" /NOLOGO /LIBPATH:"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\lib\x64" glut64.lib PGRFlyCaptureGUI.lib PGRFlyCapture.lib flycapture2_C.lib cublas.lib cuda.lib cudart.lib cufft.lib curand.lib cusparse.lib npp.lib nvcuvenc.lib nvcuvid.lib opencv_calib3d243.lib opencv_contrib243.lib opencv_core243.lib opencv_features2d243.lib opencv_gpu243.lib opencv_highgui243.lib opencv_imgproc243.lib opencv_legacy243.lib opencv_ml243.lib opencv_objdetect243.lib opencv_ts243.lib opencv_video243.lib pcl_apps_release.lib pcl_common_release.lib pcl_features_release.lib pcl_filters_release.lib pcl_io_release.lib pcl_io_ply_release.lib pcl_kdtree_release.lib pcl_keypoints_release.lib pcl_octree_release.lib pcl_registration_release.lib pcl_sample_consensus_release.lib pcl_search_release.lib pcl_segmentation_release.lib pcl_surface_release.lib pcl_tracking_release.lib pcl_visualization_release.lib flann.lib flann_s.lib flann_cpp_s.lib qhull6.lib qhullcpp.lib qhullstatic.lib qhullstatic_p.lib openNI64.lib OpenNI.jni64.lib XnVNITE.jni64.lib XnVNITE64_1_5_2.lib NiSampleModule64.lib NiSampleExtensionModule64.lib MapReduceMPI.lib mpistubs.lib vtkalglib.lib vtkCharts.lib vtkCommon.lib vtkDICOMParser.lib vtkexoIIc.lib vtkexpat.lib vtkFiltering.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGeovis.lib vtkGraphics.lib vtkhdf5.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkjpeg.lib vtklibxml2.lib vtkmetaio.lib vtkNetCDF.lib vtkNetCDF_cxx.lib vtkpng.lib vtkproj4.lib vtkRendering.lib vtksqlite.lib vtksys.lib vtktiff.lib vtkverdict.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib opengl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"x64\Release\KinectDepthmapEnhancement.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Users\Kazuki\Documents\Visual Studio 2010\Projects\KinectDepthmapEnhancement\x64\Release\KinectDepthmapEnhancement.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Users\Kazuki\Documents\Visual Studio 2010\Projects\KinectDepthmapEnhancement\x64\Release\KinectDepthmapEnhancement.lib" /MACHINE:X64 x64\Release\ArrayBuffer.cu.obj
          x64\Release\Buffer2D.cu.obj
+         x64\Release\DepthEnhancement.cu.obj
+         x64\Release\KmeansClustering.cu.obj
          x64\Release\DimensionConvertor.cu.obj
          x64\Release\EdgeRefinedSuperpixel.cu.obj
          x64\Release\JointBilateralFilter.cu.obj
          x64\Release\LabelEquivalenceSeg.cu.obj
+         x64\Release\LabelEquivalenceSegPCA.cu.obj
          x64\Release\MarkovRandomField.cu.obj
          x64\Release\IntegralImageGenerator.cu.obj
          x64\Release\NormalMapGenerator.cu.obj
          x64\Release\SmoothingAreaMapGenerator.cu.obj
          x64\Release\Projection_GPU.cu.obj
+         x64\Release\Projection_PCA.cu.obj
          x64\Release\DepthAdaptiveSuperpixel.cu.obj
          x64\Release\NormalAdaptiveSuperpixel.cu.obj
          x64\Release\SuperpixelSegmentation.cu.obj
          x64\Release\ArrayBuffer.obj
          x64\Release\Buffer2D.obj
          x64\Release\Cluster.obj
+         x64\Release\DepthEnhancement.obj
+         x64\Release\KmeansClustering.obj
          x64\Release\DimensionConvertor.obj
          x64\Release\EdgeRefinedSuperpixel.obj
          x64\Release\JointBilateralFilter.obj
          x64\Release\KinectDepthEnhancement.obj
          x64\Release\Kinect.obj
          x64\Release\LabelEquivalenceSeg.obj
+         x64\Release\LabelEquivalenceSegPCA.obj
          x64\Release\main.obj
          x64\Release\MarkovRandomField.obj
          x64\Release\IntegralImageGenerator.obj
          x64\Release\NormalMapGenerator.obj
          x64\Release\SmoothingAreaMapGenerator.obj
          x64\Release\Projection_GPU.obj
+         x64\Release\Projection_PCA.obj
          x64\Release\RegionGrowingBilateralFilter.obj
          x64\Release\SPDepthSuperResolution.obj
          x64\Release\DepthAdaptiveSuperpixel.obj
          x64\Release\NormalAdaptiveSuperpixel.obj
          x64\Release\SuperpixelSegmentation.obj
+         x64\Release\TOFDepthInterpolation.obj
          コード生成しています。
          コード生成が終了しました。
          KinectDepthmapEnhancement.vcxproj -> D:\Users\Kazuki\Documents\Visual Studio 2010\Projects\KinectDepthmapEnhancement\x64\Release\KinectDepthmapEnhancement.exe
@@ -142,4 +332,4 @@
 
 ビルドに成功しました。
 
-経過時間 00:00:07.47
+経過時間 00:00:15.68

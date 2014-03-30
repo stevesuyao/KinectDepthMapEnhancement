@@ -119,7 +119,7 @@ __global__ void depthmap_enhancement(
 			for(int j = -window_size/2; j <= window_size/2; j++){		// x
 				int xj = x+j, yi = y+i;
 				if(xj >= 0 && xj < width && yi >= 0 && yi < height && 
-					refined_depth[yi*width+xj] > 50.0f /*&& refined_labels[y*width+x] == refined_labels[yi*width+xj]*/){
+					refined_depth[yi*width+xj] > 50.0f && refined_labels[y*width+x] == refined_labels[yi*width+xj]){
 					float color_diff = powf((float)(color_image.data[(y*width+x)*3+0])-(float)(color_image.data[(yi*width+xj)*3+0]), 2) +
 										powf((float)(color_image.data[(y*width+x)*3+1])-(float)(color_image.data[(yi*width+xj)*3+1]), 2) +
 											powf((float)(color_image.data[(y*width+x)*3+2])-(float)(color_image.data[(yi*width+xj)*3+2]), 2); 
@@ -161,7 +161,7 @@ __global__ void depthmap_enhancement(
 			for(int j = -window_size/2; j <= window_size/2; j++){		// x
 				int xj = x+j, yi = y+i;
 				if(xj >= 0 && xj < width && yi >= 0 && yi < height &&
-					refined_depth[yi*width+xj] > 50.0f/* && refined_labels[y*width+x] == refined_labels[yi*width+xj]*/){
+					refined_depth[yi*width+xj] > 50.0f /*&& refined_labels[y*width+x] == refined_labels[yi*width+xj]*/){
 					//color filter
 					float color_diff = powf((float)(color_image.data[(y*width+x)*3+0])-(float)(color_image.data[(yi*width+xj)*3+0]), 2) +
 										powf((float)(color_image.data[(y*width+x)*3+1])-(float)(color_image.data[(yi*width+xj)*3+1]), 2) +
