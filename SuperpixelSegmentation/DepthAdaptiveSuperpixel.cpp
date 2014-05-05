@@ -2,11 +2,15 @@
 #include <ctime>
 
 DepthAdaptiveSuperpixel::DepthAdaptiveSuperpixel(int width, int height):
-	SuperpixelSegmentation(width, height),
-	Intrinsic_Device(cv::gpu::createContinuous(3, 3, CV_32F)){}
+	SuperpixelSegmentation(width, height){
+	cudaMalloc(&intrinsicDevice, sizeof(float)*3*3);
+	cudaMallocHost(&intrinsicHost, sizeof(float)*3*3);
+	}
 DepthAdaptiveSuperpixel::~DepthAdaptiveSuperpixel(){
 	cudaFree(superpixelCenters_Host);
 	cudaFree(superpixelCenters_Device);
+	cudaFree(intrinsicDevice);
+	cudaFree(intrinsicHost);
 }
 void DepthAdaptiveSuperpixel::SetParametor(int rows, int cols, cv::Mat_<double> intrinsic){
 	//number of clusters
@@ -26,10 +30,12 @@ void DepthAdaptiveSuperpixel::SetParametor(int rows, int cols, cv::Mat_<double> 
 		RandomColors[i] = tmp;
 	}
 	////////////////////////////////Virtual//////////////////////////////////////////
-	//set intrinsic mat
-	cv::Mat_<float> intr;
-	intrinsic.convertTo(intr, CV_32F);
-	Intrinsic_Device.upload(intr);
+	for(int y=0; y<3; y++){
+		for(int x=0; x<3; x++){
+			intrinsicHost[y*3+x] = (float)(intrinsic.at<double>(y,x));
+		}
+	}
+	cudaMemcpy(intrinsicDevice, intrinsicHost, sizeof(float)*3*3, cudaMemcpyHostToDevice);
 }
 void DepthAdaptiveSuperpixel::initMemory(){
 	//superpixel data

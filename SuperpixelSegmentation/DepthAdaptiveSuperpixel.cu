@@ -179,7 +179,7 @@ __global__ void calculateLD(
 	float spatial_sigma,
 	float depth_sigma,
 	int2 cluster_num,
-	cv::gpu::GpuMat intr){
+	float* intr){
 		__shared__ int label_shared[blockSize];
 		__shared__ float distance_shared[blockSize];
 		//thread id
@@ -206,40 +206,13 @@ __global__ void calculateLD(
 				float color_distance = pow((float)color_input.data[(y*width+x)*3]-(float)mean[ref_cluster_id].r, 2) +
 											pow((float)color_input.data[(y*width+x)*3+1]-(float)mean[ref_cluster_id].g, 2) +
 												pow((float)color_input.data[(y*width+x)*3+2]-(float)mean[ref_cluster_id].b, 2);
-				////calculate pixel distance
-				////float spatial_distance = sqrtf(pow((float)(x-ref_center.x), 2) + pow((float)(y-ref_center.y), 2));
-				//float spatial_distance;
-				//if(input_points[y*width+x].z > 50.0f &&  sp_centers[ref_cluster_id].z > 50.0f){
-				//	float distance_3d = pow(input_points[y*width+x].x-sp_centers[ref_cluster_id].x, 2.0f) +
-				//							pow(input_points[y*width+x].y-sp_centers[ref_cluster_id].y, 2.0f) +
-				//								pow(input_points[y*width+x].z-sp_centers[ref_cluster_id].z, 2.0f);
-				//	float sp_size = pow((float)(window_size.x+window_size.y)/2.0f, 2.0f);
-				//	float focal = (intr.data[0]+intr.data[4])/2.0f;
-				//	//spatial_distance = distance_3d*sp_size*pow(sqrt(distance_3d)/focal, 2.0f);
-				//	//spatial_distance = distance_3d*sp_size/**pow((intr.data[0]+intr.data[4])/(2.0f*input_points[y*width+x].z), 2.0f)*/;
-				//	
-				//	//spatial_distance = (pow((float)(x-mean[ref_cluster_id].x), 2) + pow((float)(y-mean[ref_cluster_id].y), 2) + pow((input_points[y*width+x].z-sp_centers[ref_cluster_id].z)/input_points[y*width+x].z, 2.0f)) * 
-				//	//							pow((float)(window_size.x+window_size.y)/2.0f, 2);
-				//	//spatial_distance = (pow((float)(x-mean[ref_cluster_id].x), 2) + pow((float)(y-mean[ref_cluster_id].y), 2) +  pow(input_points[y*width+x].z-sp_centers[ref_cluster_id].z, 2.0f)) * 
-				//	//							 pow((float)(window_size.x+window_size.y)/2.0f, 2);
-				//
-				//}
-				//else
-				//	spatial_distance = (pow((float)(x-mean[ref_cluster_id].x), 2) + pow((float)(y-mean[ref_cluster_id].y), 2)) * 
-				//								pow((float)(window_size.x+window_size.y)/2.0f, 2);
-				float spatial_distance = sqrtf(pow((float)(x-mean[ref_cluster_id].x), 2) + pow((float)(y-mean[ref_cluster_id].y), 2)) * 
+						float spatial_distance = sqrtf(pow((float)(x-mean[ref_cluster_id].x), 2) + pow((float)(y-mean[ref_cluster_id].y), 2)) * 
 																						pow((float)(window_size.x+window_size.y)/2.0f, 2);
 				float depth_distance = 0.0f;
 				if(input_points[y*width+x].z > 50.0f &&  sp_centers[ref_cluster_id].z > 50.0f){
 					float diff = abs(input_points[y*width+x].z - sp_centers[ref_cluster_id].z );
-					//if( diff > 100.0f){
-					//spatial_distance += abs(input_points[y*width+x].z - sp_centers[ref_cluster_id].z);
-					float focal = (intr.data[0]+intr.data[4])/2.0f;
-					//spatial_distance += (diff/input_points[y*width+x].z)*focal*pow((float)(window_size.x+window_size.y)/2.0f, 2.0f);
-					//depth_distance = (diff/input_points[y*width+x].z)*focal*pow((float)(window_size.x+window_size.y)/2.0f, 2.0f);
-					depth_distance = diff;
-					//}
-				}
+						depth_distance = diff;
+						}
 				float sum_sigma = spatial_sigma+color_sigma+depth_sigma;
 				//set current ld
 				distance_shared[tid] = color_distance*pow(color_sigma/sum_sigma, 2.0f) + spatial_distance*pow(spatial_sigma/sum_sigma, 2.0f) + depth_distance*pow(depth_sigma/sum_sigma, 2.0f);
@@ -350,7 +323,7 @@ __global__ void analyzeClusters(
 	int2 cluster_num,
 	int width,
 	int height,
-	cv::gpu::GpuMat intr){
+	float* intr){
 		//4*10=40 Byte 16384/40 = 20*20 threads
 		__shared__ int r_shared[blockSize];
 		__shared__ int g_shared[blockSize];
@@ -571,8 +544,8 @@ __global__ void analyzeClusters(
 					float2 norm;
 					norm.x = sp_centers[cluster_id].x/sp_centers[cluster_id].z;
 					norm.y = sp_centers[cluster_id].y/sp_centers[cluster_id].z;
-					pixel.x = (int)(norm.x*intr.data[0] + intr.data[2]);
-					pixel.y = (int)(intr.data[5] - norm.y*intr.data[4]);
+					pixel.x = (int)(norm.x*intr[0] + intr[2]);
+					pixel.y = (int)(intr[5] - norm.y*intr[4]);
 					if(pixel.x<0 || pixel.x>=width || pixel.y<0 || pixel.y<=height){
 						pixel.x = x_shared[0]/size_shared[0];
 						pixel.y = y_shared[0]/size_shared[0];
@@ -582,10 +555,7 @@ __global__ void analyzeClusters(
 					pixel.x = x_shared[0]/size_shared[0];
 					pixel.y = y_shared[0]/size_shared[0];
 				}
-				//pixel.x = pixel.x<0 ? 0:pixel.x;
-				//pixel.x = pixel.x>=width ? width:pixel.x;
-				//pixel.y = pixel.y<0 ? 0:pixel.y;
-				//pixel.y = pixel.y>=height ? height:pixel.y;
+				
 				mean[cluster_id].x = pixel.x;
 				mean[cluster_id].y = pixel.y;
 				mean[cluster_id].r = (unsigned char)(r);
@@ -609,10 +579,10 @@ void DepthAdaptiveSuperpixel::Segmentation(cv::gpu::GpuMat color_image, float3* 
 			//Set cluster IDs	
 			calculateLD<4*4><<<dim3(width, height), dim3(4, 4)>>>
 				(color_image, points3d_device, LD_Device, meanData_Device, superpixelCenters_Device, Labels_Device, 
-				Window_Size, width, height, color_sigma, spatial_sigma, depth_sigma, ClusterNum, Intrinsic_Device);
+				Window_Size, width, height, color_sigma, spatial_sigma, depth_sigma, ClusterNum, intrinsicDevice);
 			analyzeClusters<16*16><<<dim3(ClusterNum.x, ClusterNum.y), dim3(16, 16)>>>
 				(color_image, points3d_device, LD_Device, meanData_Device, superpixelCenters_Device, 
-				Window_Size, ClusterNum, width, height, Intrinsic_Device);
+				Window_Size, ClusterNum, width, height, intrinsicDevice);
 		}
 		cudaMemcpy(Labels_Host, Labels_Device, sizeof(int)*width*height, cudaMemcpyDeviceToHost);
 }

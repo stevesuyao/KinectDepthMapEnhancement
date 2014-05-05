@@ -25,6 +25,7 @@ public:
 		int* getMergedClusterLabel_Host()const;
 		float* getMergedClusterVariance_Device()const;
 		float* getMergedClusterVariance_Host()const;
+		int* getMergedClusterSize_Device()const;
 		void releaseVideo();
 
 private:

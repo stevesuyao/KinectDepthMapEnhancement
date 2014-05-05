@@ -20,7 +20,8 @@ public:
 	void virtual SetParametor(int rows, int cols, cv::Mat_<double> intrinsic);
 	void virtual Segmentation(cv::gpu::GpuMat color_image, float3* points3d_device, float color_sigma, float spatial_sigma, float depth_sigma, int iteration);
 protected:
-	cv::gpu::GpuMat				Intrinsic_Device;
+	float*						intrinsicDevice;
+	float*						intrinsicHost;
 	float3*						superpixelCenters_Host;
 	float3*						superpixelCenters_Device;
 	void						initMemory();

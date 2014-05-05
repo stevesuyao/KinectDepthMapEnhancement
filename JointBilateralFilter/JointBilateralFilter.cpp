@@ -42,7 +42,6 @@ float* JointBilateralFilter::getFiltered_Device()const{
 	return Filtered_Device;
 }
 float* JointBilateralFilter::getFiltered_Host()const{
-	cudaMemcpy(Filtered_Host, Filtered_Device, sizeof(float)*Width*Height, cudaMemcpyDeviceToHost);
 	return Filtered_Host;
 }
 cv::gpu::GpuMat	JointBilateralFilter::getSmoothImage_Device(){

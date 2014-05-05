@@ -52,19 +52,19 @@ __global__ void sampleInitialClusters_NASP(
 				ly = ly < height ? ly : height - 1;
 
 				g = sqrtf(pow((float)color_input.data[(around.y*width+around.x)*3]-(float)color_input.data[(yy*width+xx)*3], 2) +
-							pow((float)color_input.data[(around.y*width+around.x)*3+1]-(float)color_input.data[(yy*width+xx)*3+1], 2) +
-								pow((float)color_input.data[(around.y*width+around.x)*3+2]-(float)color_input.data[(yy*width+xx)*3+2], 2));
+					pow((float)color_input.data[(around.y*width+around.x)*3+1]-(float)color_input.data[(yy*width+xx)*3+1], 2) +
+					pow((float)color_input.data[(around.y*width+around.x)*3+2]-(float)color_input.data[(yy*width+xx)*3+2], 2));
 				if(normals[around.y*width+around.x].x != -1.0f && 
-						normals[around.y*width+around.x].y != -1.0f && 
-							normals[around.y*width+around.x].z != -1.0f){
-					if(normals[yy*width+xx].x != -1.0f && 
-						normals[yy*width+xx].y != -1.0f && 
+					normals[around.y*width+around.x].y != -1.0f && 
+					normals[around.y*width+around.x].z != -1.0f){
+						if(normals[yy*width+xx].x != -1.0f && 
+							normals[yy*width+xx].y != -1.0f && 
 							normals[yy*width+xx].z != -1.0f){
 								float normal_diff = abs(normals[around.y*width+around.x].x*normals[yy*width+xx].x +
-															normals[around.y*width+around.x].y*normals[yy*width+xx].y +
-																normals[around.y*width+around.x].z*normals[yy*width+xx].z);
+									normals[around.y*width+around.x].y*normals[yy*width+xx].y +
+									normals[around.y*width+around.x].z*normals[yy*width+xx].z);
 								g *= (1.0f-normal_diff);
-					}
+						}
 				}
 				count += g > 0.0 ? 1 : 0;
 				sumG += g;
@@ -199,7 +199,7 @@ __global__ void calculateLD_NASP(
 	float depth_sigma,
 	float normal_sigma,
 	int2 cluster_num,
-	cv::gpu::GpuMat intr){
+	float* intr){
 		__shared__ int label_shared[blockSize];
 		__shared__ float distance_shared[blockSize];
 		//thread id
@@ -219,9 +219,6 @@ __global__ void calculateLD_NASP(
 		int ref_cluster_id = ref_cluster.y*cluster_num.x+ref_cluster.x;
 		if(ref_cluster.x>=0 && ref_cluster.x<cluster_num.x && 
 			ref_cluster.y>=0 && ref_cluster.y<cluster_num.y){
-				int2 ref_center;
-				ref_center.x = (int)mean[ref_cluster_id].x;
-				ref_center.y = (int)mean[ref_cluster_id].y;
 				//calculate distance
 				float color_distance = pow((float)color_input.data[(y*width+x)*3]-(float)mean[ref_cluster_id].r, 2) +
 					pow((float)color_input.data[(y*width+x)*3+1]-(float)mean[ref_cluster_id].g, 2) +
@@ -238,26 +235,19 @@ __global__ void calculateLD_NASP(
 				if(input_points[y*width+x].z > 50.0f &&  sp_centers[ref_cluster_id].z > 50.0f){
 					//depth distance
 					float diff = abs(input_points[y*width+x].z - sp_centers[ref_cluster_id].z );
-					float focal = (intr.data[0]+intr.data[4])/2.0f;
-					//spatial_distance += (diff/input_points[y*width+x].z)*focal*pow((float)(window_size.x+window_size.y)/2.0f, 2.0f);
-					//depth_distance = (diff/input_points[y*width+x].z)*focal*pow((float)(window_size.x+window_size.y)/2.0f, 2.0f);
 					depth_distance = diff;
-					//spatial_distance += diff*pow((float)(window_size.x+window_size.y)/2.0f, 2.0f);
-					//da_spatial_sigma *= focal/input_points[y*width+x].z;
 					//normal distance
 					if(normals[y*width+x].x != -1.0f || 
 						normals[y*width+x].y != -1.0f || 
-							normals[y*width+x].z != -1.0f){
+						normals[y*width+x].z != -1.0f){
 							if(sp_normals[ref_cluster_id].x != -1.0f || 
 								sp_normals[ref_cluster_id].y != -1.0f || 
-									sp_normals[ref_cluster_id].z != -1.0f){
-								float normal_diff = normals[y*width+x].x*sp_normals[ref_cluster_id].x +
-															normals[y*width+x].y*normals[ref_cluster_id].y +
-																normals[y*width+x].z*normals[ref_cluster_id].z;
-								normal_diff = normal_diff < 0.0f ? 0.0f:normal_diff; 
-								//normal_distance = 255.0f*(1.0f-normal_diff)*focal/input_points[y*width+x].z;
-								normal_distance = pow(255.0f, 2.0f)*(1.0f-normal_diff);
-								//da_normal_sigma *= focal/input_points[y*width+x].z;
+								sp_normals[ref_cluster_id].z != -1.0f){
+									float normal_diff = normals[y*width+x].x*sp_normals[ref_cluster_id].x +
+										normals[y*width+x].y*sp_normals[ref_cluster_id].y +
+										normals[y*width+x].z*sp_normals[ref_cluster_id].z;
+									normal_diff = normal_diff < 0.0f ? 0.0f:normal_diff; 
+									normal_distance = pow(255.0f, 2.0f)*(1.0-normal_diff);
 							}
 					}
 				}
@@ -265,7 +255,7 @@ __global__ void calculateLD_NASP(
 				//float sum_sigma = spatial_sigma+color_sigma+normal_sigma;
 				float sum_sigma = spatial_sigma+color_sigma+da_normal_sigma+depth_sigma;
 				distance_shared[tid] = color_distance*pow(color_sigma/sum_sigma, 2.0f) + spatial_distance*pow(spatial_sigma/sum_sigma, 2.0f) + 
-											depth_distance*pow(depth_sigma/sum_sigma, 2.0f) + normal_distance*pow(da_normal_sigma/sum_sigma, 2.0f);
+					depth_distance*pow(depth_sigma/sum_sigma, 2.0f) + normal_distance*pow(da_normal_sigma/sum_sigma, 2.0f);
 				label_shared[tid] = ref_cluster.y*cluster_num.x+ref_cluster.x;		
 		}
 		else{
@@ -356,10 +346,10 @@ __global__ void calculateLD_NASP(
 			labels[y*width+x] = label_shared[0];
 		}
 		if(input_points[y*width+x].z < 50.0f && 
-				(depth_sigma != 0.0f || normal_sigma != 0.0f)){
-			pixel_ld[y*width+x].l = -1;
-			pixel_ld[y*width+x].d = 0.0f;
-			labels[y*width+x] = -1;
+			(depth_sigma != 0.0f || normal_sigma != 0.0f)){
+				pixel_ld[y*width+x].l = -1;
+				pixel_ld[y*width+x].d = 0.0f;
+				labels[y*width+x] = -1;
 		}
 }
 
@@ -376,7 +366,7 @@ __global__ void analyzeClusters_NASP(
 	int2 cluster_num,
 	int width,
 	int height,
-	cv::gpu::GpuMat intr){
+	float* intr){
 		//4*13=32 Byte 16384/52 = 17*17 threads
 		__shared__ int r_shared[blockSize];
 		__shared__ int g_shared[blockSize];
@@ -393,7 +383,7 @@ __global__ void analyzeClusters_NASP(
 		__shared__ float nx_shared[blockSize];
 		__shared__ float ny_shared[blockSize];
 		__shared__ float nz_shared[blockSize];
-		
+
 		//thread id
 		int tid = threadIdx.y*blockDim.x+threadIdx.x;
 		r_shared[tid] = 0;
@@ -446,8 +436,8 @@ __global__ void analyzeClusters_NASP(
 						if(input_points[arounds.y*width+arounds.x].z>50.0f){
 							if(normals[arounds.y*width+arounds.x].x != -1.0f ||
 								normals[arounds.y*width+arounds.x].y != -1.0f ||
-								 normals[arounds.y*width+arounds.x].z != -1.0f ){
-									 //3d points
+								normals[arounds.y*width+arounds.x].z != -1.0f ){
+									//3d points
 									xw_shared[tid] += input_points[arounds.y*width+arounds.x].x;
 									yw_shared[tid] += input_points[arounds.y*width+arounds.x].y;
 									zw_shared[tid] += input_points[arounds.y*width+arounds.x].z;
@@ -463,7 +453,7 @@ __global__ void analyzeClusters_NASP(
 			}
 		}
 		__syncthreads();
-		
+
 		//calculate average
 		if(blockSize >= 1024){
 			if(tid < 512){
@@ -639,20 +629,30 @@ __global__ void analyzeClusters_NASP(
 				g = g<0 ? 0:g;
 				b = b<0 ? 0:b;
 				int2 pixel;
+				pixel.x = x_shared[0]/size_shared[0];
+				pixel.y = y_shared[0]/size_shared[0];
 				if(num_of_points[0] != 0){
-					//centers
-					sp_centers[cluster_id].x = xw_shared[0]/(float)num_of_points[0];
-					sp_centers[cluster_id].y = yw_shared[0]/(float)num_of_points[0];
-					sp_centers[cluster_id].z = zw_shared[0]/(float)num_of_points[0];
-					//real to projective
-					float2 norm;
-					norm.x = sp_centers[cluster_id].x/sp_centers[cluster_id].z;
-					norm.y = sp_centers[cluster_id].y/sp_centers[cluster_id].z;
-					pixel.x = (int)(norm.x*intr.data[0] + intr.data[2]);
-					pixel.y = (int)(intr.data[5] - norm.y*intr.data[4]);
-					if(pixel.x<0 || pixel.x>=width || pixel.y<0 || pixel.y<=height){
-						pixel.x = x_shared[0]/size_shared[0];
-						pixel.y = y_shared[0]/size_shared[0];
+					if(input_points[pixel.y*width+pixel.x].z > 50.0f){
+						sp_centers[cluster_id].x = input_points[pixel.y*width+pixel.x].x;
+						sp_centers[cluster_id].y = input_points[pixel.y*width+pixel.x].y;
+						sp_centers[cluster_id].z = input_points[pixel.y*width+pixel.x].z;
+					}
+					else{
+						//centers
+						sp_centers[cluster_id].x = xw_shared[0]/(float)num_of_points[0];
+						sp_centers[cluster_id].y = yw_shared[0]/(float)num_of_points[0];
+						sp_centers[cluster_id].z = zw_shared[0]/(float)num_of_points[0];
+
+						//real to projective
+						float2 norm;
+						norm.x = sp_centers[cluster_id].x/sp_centers[cluster_id].z;
+						norm.y = sp_centers[cluster_id].y/sp_centers[cluster_id].z;
+						pixel.x = (int)(norm.x*intr[0] + intr[2]);
+						pixel.y = (int)(intr[5] - norm.y*intr[4]);
+						if(pixel.x<0 || pixel.x>=width || pixel.y<0 || pixel.y<=height){
+							pixel.x = x_shared[0]/size_shared[0];
+							pixel.y = y_shared[0]/size_shared[0];
+						}
 					}
 					//normals
 					sp_normals[cluster_id].x = nx_shared[0]/(float)num_of_points[0];
@@ -660,8 +660,6 @@ __global__ void analyzeClusters_NASP(
 					sp_normals[cluster_id].z = nz_shared[0]/(float)num_of_points[0];
 				}
 				else{
-					pixel.x = x_shared[0]/size_shared[0];
-					pixel.y = y_shared[0]/size_shared[0];
 					sp_normals[cluster_id].x = -1.0f;
 					sp_normals[cluster_id].y = -1.0f;
 					sp_normals[cluster_id].z = -1.0f;
@@ -703,7 +701,7 @@ __global__ void calculateWeightedAverage(
 	float color_sigma,
 	float spatial_sigma,
 	float normal_sigma,
-	cv::gpu::GpuMat intr){
+	float* intr){
 		//4*13=52 Byte 16384/52 = 17*17 threads
 		__shared__ float r_shared[blockSize];
 		__shared__ float g_shared[blockSize];
@@ -766,8 +764,8 @@ __global__ void calculateWeightedAverage(
 					if(around_id == cluster_id){
 						//calculate color weight
 						float color_diff = powf((float)(color_input.data[(arounds.y*width+arounds.x)*3+0])-(float)(mean[cluster_id].r), 2) +
-												powf((float)(color_input.data[(arounds.y*width+arounds.x)*3+1])-(float)(mean[cluster_id].g), 2) +
-													powf((float)(color_input.data[(arounds.y*width+arounds.x)*3+2])-(float)(mean[cluster_id].b), 2); 
+							powf((float)(color_input.data[(arounds.y*width+arounds.x)*3+1])-(float)(mean[cluster_id].g), 2) +
+							powf((float)(color_input.data[(arounds.y*width+arounds.x)*3+2])-(float)(mean[cluster_id].b), 2); 
 						float color_filter = expf(-color_diff/(2*powf(color_sigma, 2.0f)));
 						//calculate spatial filter
 						float spatial_diff = powf((float)(arounds.x-mean[cluster_id].x), 2.0f)+powf((float)(arounds.y-mean[cluster_id].y), 2.0f);
@@ -788,59 +786,34 @@ __global__ void calculateWeightedAverage(
 						x_shared[tid] += arounds.x*color_filter*spatial_filter;
 						y_shared[tid] += arounds.y*color_filter*spatial_filter;
 						size_shared[tid] += color_filter*spatial_filter;
-						//if(input_points[arounds.y*width+arounds.x].z>50.0f){
-						//	if(normals[arounds.y*width+arounds.x].x != -1.0f ||
-						//		normals[arounds.y*width+arounds.x].y != -1.0f ||
-						//		 normals[arounds.y*width+arounds.x].z != -1.0f ){
-						//			//calculate spatial filter
-						//			spatial_diff = powf((float)(input_points[arounds.y*width+arounds.x].x-sp_centers[cluster_id].x), 2.0f) +
-						//							powf((float)(input_points[arounds.y*width+arounds.x].y-sp_centers[cluster_id].y), 2.0f) + 
-						//							 powf((float)(input_points[arounds.y*width+arounds.x].z-sp_centers[cluster_id].z), 2.0f);
-						//			spatial_filter = expf(-spatial_diff/(2*powf(spatial_sigma, 2.0f)));
-						//			//calculate normal filter
-						//			float normal_diff = normals[arounds.y*width+arounds.x].x*sp_normals[cluster_id].x + 
-						//										normals[arounds.y*width+arounds.x].y*sp_normals[cluster_id].y + 
-						//											normals[arounds.y*width+arounds.x].z*sp_normals[cluster_id].z;
-						//			normal_diff = normal_diff < 0.0f ? 0.0f:normal_diff; 
-						//			float normal_filter = normal_diff;
-						//			//3d points
-						//			xw_shared[tid] += input_points[arounds.y*width+arounds.x].x*spatial_filter*normal_filter;
-						//			yw_shared[tid] += input_points[arounds.y*width+arounds.x].y*spatial_filter*normal_filter;
-						//			zw_shared[tid] += input_points[arounds.y*width+arounds.x].z*spatial_filter*normal_filter;
-						//			//normals
-						//			nx_shared[tid] += normals[arounds.y*width+arounds.x].x*spatial_filter*normal_filter;
-						//			ny_shared[tid] += normals[arounds.y*width+arounds.x].y*spatial_filter*normal_filter;
-						//			nz_shared[tid] += normals[arounds.y*width+arounds.x].z*spatial_filter*normal_filter;
-						//			num_of_points[tid] += spatial_filter*normal_filter;
-						//	}
-						//}
+				
 						if(input_points[arounds.y*width+arounds.x].z>50.0f){
 							if(normals[arounds.y*width+arounds.x].x != -1.0f ||
 								normals[arounds.y*width+arounds.x].y != -1.0f ||
-								 normals[arounds.y*width+arounds.x].z != -1.0f ){
+								normals[arounds.y*width+arounds.x].z != -1.0f ){
 									//calculate spatial filter
 									spatial_diff = powf((float)(input_points[arounds.y*width+arounds.x].x-sp_centers[cluster_id].x), 2.0f) +
-													powf((float)(input_points[arounds.y*width+arounds.x].y-sp_centers[cluster_id].y), 2.0f) + 
-													 powf((float)(input_points[arounds.y*width+arounds.x].z-sp_centers[cluster_id].z), 2.0f);
+										powf((float)(input_points[arounds.y*width+arounds.x].y-sp_centers[cluster_id].y), 2.0f) + 
+										powf((float)(input_points[arounds.y*width+arounds.x].z-sp_centers[cluster_id].z), 2.0f);
 									//spatial_filter = expf(-spatial_diff/(2*powf(spatial_sigma, 2.0f)));
 									//calculate normal filter
 									float normal_diff = normals[arounds.y*width+arounds.x].x*sp_normals[cluster_id].x + 
-																normals[arounds.y*width+arounds.x].y*sp_normals[cluster_id].y + 
-																	normals[arounds.y*width+arounds.x].z*sp_normals[cluster_id].z;
+										normals[arounds.y*width+arounds.x].y*sp_normals[cluster_id].y + 
+										normals[arounds.y*width+arounds.x].z*sp_normals[cluster_id].z;
 									normal_diff = normal_diff < 0.0f ? 0.0f:normal_diff; 
 									//float normal_filter = normal_diff;
 									if(acos(normal_diff) < (3.141592653f / 3.0f)){ 
-									//3d points
-									xw_shared[tid] += input_points[arounds.y*width+arounds.x].x;
-									yw_shared[tid] += input_points[arounds.y*width+arounds.x].y;
-									zw_shared[tid] += input_points[arounds.y*width+arounds.x].z;
-									//normals
-									nx_shared[tid] += normals[arounds.y*width+arounds.x].x;
-									ny_shared[tid] += normals[arounds.y*width+arounds.x].y;
-									nz_shared[tid] += normals[arounds.y*width+arounds.x].z;
-									variance_shared[tid] += normal_diff;
-									num_of_points[tid] ++;
-								}
+										//3d points
+										xw_shared[tid] += input_points[arounds.y*width+arounds.x].x;
+										yw_shared[tid] += input_points[arounds.y*width+arounds.x].y;
+										zw_shared[tid] += input_points[arounds.y*width+arounds.x].z;
+										//normals
+										nx_shared[tid] += normals[arounds.y*width+arounds.x].x;
+										ny_shared[tid] += normals[arounds.y*width+arounds.x].y;
+										nz_shared[tid] += normals[arounds.y*width+arounds.x].z;
+										variance_shared[tid] += normal_diff;
+										num_of_points[tid] ++;
+									}
 							}
 						}
 					}
@@ -848,7 +821,7 @@ __global__ void calculateWeightedAverage(
 			}
 		}
 		__syncthreads();
-		
+
 		//calculate average
 		if(blockSize >= 1024){
 			if(tid < 512){
@@ -1034,28 +1007,39 @@ __global__ void calculateWeightedAverage(
 				g = g<0 ? 0:g;
 				b = b<0 ? 0:b;
 				int2 pixel;
+				pixel.x = (int)(x_shared[0]/size_shared[0]);
+				pixel.y = (int)(y_shared[0]/size_shared[0]);
 				if(num_of_points[0] != 0){
-					//centers
-					sp_centers[cluster_id].x = xw_shared[0]/(float)num_of_points[0];
-					sp_centers[cluster_id].y = yw_shared[0]/(float)num_of_points[0];
-					sp_centers[cluster_id].z = zw_shared[0]/(float)num_of_points[0];
-					//real to projective
-					float2 norm;
-					norm.x = sp_centers[cluster_id].x/sp_centers[cluster_id].z;
-					norm.y = sp_centers[cluster_id].y/sp_centers[cluster_id].z;
-					pixel.x = (int)(norm.x*intr.data[0] + intr.data[2]);
-					pixel.y = (int)(intr.data[5] - norm.y*intr.data[4]);
-					if(pixel.x<0 || pixel.x>=width || pixel.y<0 || pixel.y<=height){
-						pixel.x = x_shared[0]/size_shared[0];
-						pixel.y = y_shared[0]/size_shared[0];
+
+					if(input_points[pixel.y*width+pixel.x].z > 50.0f){
+						sp_centers[cluster_id].x = input_points[pixel.y*width+pixel.x].x;
+						sp_centers[cluster_id].y = input_points[pixel.y*width+pixel.x].y;
+						sp_centers[cluster_id].z = input_points[pixel.y*width+pixel.x].z;
+					}
+					else{
+						//centers
+						sp_centers[cluster_id].x = xw_shared[0]/(float)num_of_points[0];
+						sp_centers[cluster_id].y = yw_shared[0]/(float)num_of_points[0];
+						sp_centers[cluster_id].z = zw_shared[0]/(float)num_of_points[0];
+
+						//real to projective
+						float2 norm;
+						norm.x = sp_centers[cluster_id].x/sp_centers[cluster_id].z;
+						norm.y = sp_centers[cluster_id].y/sp_centers[cluster_id].z;
+						pixel.x = (int)(norm.x*intr[0] + intr[2]);
+						pixel.y = (int)(intr[5] - norm.y*intr[4]);
+						if(pixel.x<0 || pixel.x>=width || pixel.y<0 || pixel.y<=height){
+							pixel.x = x_shared[0]/size_shared[0];
+							pixel.y = y_shared[0]/size_shared[0];
+						}
 					}
 					//normals
 					sp_normals[cluster_id].x = nx_shared[0]/(float)num_of_points[0];
 					sp_normals[cluster_id].y = ny_shared[0]/(float)num_of_points[0];
 					sp_normals[cluster_id].z = nz_shared[0]/(float)num_of_points[0];
 					float n = sqrtf(sp_normals[cluster_id].x*sp_normals[cluster_id].x + 
-										sp_normals[cluster_id].y*sp_normals[cluster_id].y +
-											sp_normals[cluster_id].z*sp_normals[cluster_id].z);
+						sp_normals[cluster_id].y*sp_normals[cluster_id].y +
+						sp_normals[cluster_id].z*sp_normals[cluster_id].z);
 					sp_normals[cluster_id].x /= n;
 					sp_normals[cluster_id].y /= n;
 					sp_normals[cluster_id].z /= n;
@@ -1063,8 +1047,6 @@ __global__ void calculateWeightedAverage(
 					normals_variance[cluster_id] = variance_shared[0]/(float)num_of_points[0];
 				}
 				else{
-					pixel.x = (int)(x_shared[0]/size_shared[0]);
-					pixel.y = (int)(y_shared[0]/size_shared[0]);
 					sp_normals[cluster_id].x = -1.0f;
 					sp_normals[cluster_id].y = -1.0f;
 					sp_normals[cluster_id].z = -1.0f;
@@ -1073,12 +1055,7 @@ __global__ void calculateWeightedAverage(
 					sp_centers[cluster_id].z = 0.0f;
 					normals_variance[cluster_id] = 0.0f;
 				}	
-				//pixel.x = (pixel.x<0) ? 0:pixel.x;
-				//pixel.x = (pixel.x>=width) ? width:pixel.x;
-				//pixel.y = (pixel.y<0) ? 0:pixel.y;
-				//pixel.y = (pixel.y>=height) ? height:pixel.y;
-				//pixel.x = (int)(x_shared[0]/size_shared[0]);
-				//pixel.y = (int)(y_shared[0]/size_shared[0]);	
+
 				mean[cluster_id].x = pixel.x;
 				mean[cluster_id].y = pixel.y;
 				mean[cluster_id].r = (unsigned char)(r);
@@ -1086,60 +1063,41 @@ __global__ void calculateWeightedAverage(
 				mean[cluster_id].b = (unsigned char)(b);
 				mean[cluster_id].size = size_shared[0];
 			}
-			//else{
-			//	sp_normals[cluster_id].x = -1.0f;
-			//	sp_normals[cluster_id].y = -1.0f;
-			//	sp_normals[cluster_id].z = -1.0f;
-			//}
 		}
 
 }
+
 void NormalAdaptiveSuperpixel::Segmentation(cv::gpu::GpuMat color_image, float3* points3d_device, float3* normals_device,
-												float color_sigma, float spatial_sigma, float depth_sigma, float normal_sigma, int iteration){
+	float color_sigma, float spatial_sigma, float depth_sigma, float normal_sigma, int iteration){
 		//init label distance
 		initLD_NASP<<<dim3(width/32, height/32), dim3(32, 32)>>>
 			(LD_Device, width, height, ClusterNum, Window_Size);
 		//sample clusters, move centers
 		sampleInitialClusters_NASP<8*8><<<dim3(ClusterNum.x, ClusterNum.y), dim3(8, 8)>>>
 			(color_image, points3d_device, normals_device, meanData_Device, superpixelCenters_Device, superpixelNormals_Device, width, height, Window_Size);
+		//calculate reliability map
+		//cv::gpu::GpuMat reliabilityDevice = cv::gpu::createContinuous(height, width, CV_8UC1);
+
 		for(int i = 0; i < iteration; i++){
 			//Set cluster IDs	
 			calculateLD_NASP<8*8><<<dim3(width, height), dim3(8, 8)>>>
 				(color_image, points3d_device, normals_device, LD_Device, meanData_Device, superpixelCenters_Device, superpixelNormals_Device,
-						Labels_Device, Window_Size, width, height, color_sigma, spatial_sigma, depth_sigma, normal_sigma, ClusterNum, Intrinsic_Device);
-		
+				Labels_Device, Window_Size, width, height, color_sigma, spatial_sigma, depth_sigma, normal_sigma, ClusterNum, intrinsicDevice);
+
 			//calculate average value of superpixel
 			analyzeClusters_NASP<16*16><<<dim3(ClusterNum.x, ClusterNum.y), dim3(16, 16)>>>
 				(color_image, points3d_device, normals_device, LD_Device, meanData_Device, superpixelCenters_Device, superpixelNormals_Device,
-					Window_Size, ClusterNum, width, height, Intrinsic_Device);
-		
-			//	cudaMemcpy(superpixelCenters_Host, superpixelCenters_Device, sizeof(float3)*ClusterNum.x*ClusterNum.y, cudaMemcpyDeviceToHost);
-		//cudaMemcpy(superpixelNormals_Host, superpixelNormals_Device, sizeof(float3)*ClusterNum.x*ClusterNum.y, cudaMemcpyDeviceToHost);
-		
-		
-		//for(int y=0; y<ClusterNum.y; y++){
-		//	for(int x=0; x<ClusterNum.x; x++){
-		//		std::cout <<"center: "<<"x "<<superpixelCenters_Host[y*ClusterNum.x+x].x <<" y"<<superpixelCenters_Host[y*ClusterNum.x+x].y <<" z"<<superpixelCenters_Host[y*ClusterNum.x+x].z<<std::endl;
-		//			std::cout <<"normal: "<<"x "<<superpixelNormals_Host[y*ClusterNum.x+x].x <<" y"<<superpixelNormals_Host[y*ClusterNum.x+x].y << " z"<<superpixelNormals_Host[y*ClusterNum.x+x].z<<std::endl;
-		//	}
-		//}
-		
-		///calculate weighted average of superpixel
-		calculateWeightedAverage<16*16><<<dim3(ClusterNum.x, ClusterNum.y), dim3(16, 16)>>>
+				Window_Size, ClusterNum, width, height, intrinsicDevice);
+
+			///calculate weighted average of superpixel
+			calculateWeightedAverage<16*16><<<dim3(ClusterNum.x, ClusterNum.y), dim3(16, 16)>>>
 				(color_image, points3d_device, normals_device, LD_Device, meanData_Device, superpixelCenters_Device, superpixelNormals_Device, NormalsVariance_Device,
-					Window_Size, ClusterNum, width, height, color_sigma, spatial_sigma, normal_sigma, Intrinsic_Device);
+				Window_Size, ClusterNum, width, height, color_sigma, spatial_sigma, normal_sigma, intrinsicDevice);
 		}
 		cudaMemcpy(Labels_Host, Labels_Device, sizeof(int)*width*height, cudaMemcpyDeviceToHost);
-		
+
 		cudaMemcpy(meanData_Host, meanData_Device, sizeof(superpixel)*ClusterNum.x*ClusterNum.y, cudaMemcpyDeviceToHost);
 		cudaMemcpy(superpixelCenters_Host, superpixelCenters_Device, sizeof(float3)*ClusterNum.x*ClusterNum.y, cudaMemcpyDeviceToHost);
 		cudaMemcpy(superpixelNormals_Host, superpixelNormals_Device, sizeof(float3)*ClusterNum.x*ClusterNum.y, cudaMemcpyDeviceToHost);
-		
-		
-		//for(int y=0; y<ClusterNum.y; y++){
-		//	for(int x=0; x<ClusterNum.x; x++){
-		//		std::cout <<"center: "<<"x "<<superpixelCenters_Host[y*ClusterNum.x+x].x <<" y"<<superpixelCenters_Host[y*ClusterNum.x+x].y <<" z"<<superpixelCenters_Host[y*ClusterNum.x+x].z<<std::endl;
-		//			std::cout <<"normal: "<<"x "<<superpixelNormals_Host[y*ClusterNum.x+x].x <<" y"<<superpixelNormals_Host[y*ClusterNum.x+x].y << " z"<<superpixelNormals_Host[y*ClusterNum.x+x].z<<std::endl;
-		//	}
-		//}
+
 }

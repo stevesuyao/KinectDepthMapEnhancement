@@ -54,25 +54,30 @@ void KinectDepthEnhancement::SetParametor(int rows, int cols, cv::Mat_<double> i
 	Projector = new Projection_GPU(Width, Height, intrinsic);
 }
 void KinectDepthEnhancement::Process(float* depth_device, cv::gpu::GpuMat color_device){
-	//segmentation
-	SP->Segmentation(color_device, EdgeEnhanced3DPoints_Device, 200.0f, 1.0f, 0.0f, 5);
-	//DASP->Segmentation(color_device, EdgeEnhanced3DPoints_Device, 0.0f, 10.0f, 200.0f, 5);
+	//filtering
 	JBF->Process(depth_device, color_device);
 	//convert to realworld
 	Convertor->projectiveToReal(JBF->getFiltered_Device(), EdgeEnhanced3DPoints_Device);
+	//segmentation
+	//SP->Segmentation(color_device, EdgeEnhanced3DPoints_Device, 200.0f, 1.0f, 0.0f, 5);
+	//DASP->Segmentation(color_device, EdgeEnhanced3DPoints_Device, 0.0f, 10.0f, 200.0f, 5);
 	//normal estimation
 	NormalGenerator->generateNormalMap(EdgeEnhanced3DPoints_Device);
-	//cv::imshow("nmg", NormalGenerator->getNormalImg());
-	NASP->Segmentation(color_device, EdgeEnhanced3DPoints_Device, NormalGenerator->getNormalMap(), 50.0f, 1.0f, 100.0f, 200.0f, 5);
+	//cv::imwrite("normalImage.jpg", NormalGenerator->getNormalImg());
+	NASP->Segmentation(color_device, EdgeEnhanced3DPoints_Device, NormalGenerator->getNormalMap(), 10.0f, 50.0f, 50.0f, 150.0f, 1);
+
+	cv::imwrite("segmentation.jpg", NASP->getRandomColorImage());
 	//edge refinement
-	ERS->EdgeRefining(SP->getLabelDevice(), NASP->getLabelDevice(), depth_device, color_device);
-	////convert to realworld
+	//ERS->EdgeRefining(SP->getLabelDevice(), NASP->getLabelDevice(), depth_device, color_device);
+	//convert to realworld
 	//Convertor->projectiveToReal(ERS->getRefinedDepth_Device(), EdgeEnhanced3DPoints_Device);
 	//superpixel merging
-	spMerging->labelImage(NASP->getNormalsDevice(), ERS->getRefinedLabels_Device(), NASP->getCentersDevice(), NASP->getNormalsVarianceDevice());
-	//spMerging->labelImage(NASP->getNormalsDevice(), NASP->getLabelDevice(), NASP->getCentersDevice(), NASP->getNormalsVarianceDevice());
+	//spMerging->labelImage(NASP->getNormalsDevice(), ERS->getRefinedLabels_Device(), NASP->getCentersDevice(), NASP->getNormalsVarianceDevice());
+	spMerging->labelImage(NASP->getNormalsDevice(), NASP->getLabelDevice(), NASP->getCentersDevice(), NASP->getNormalsVarianceDevice());
+	cv::imwrite("labelImage.jpg", spMerging->getSegmentResult());
 	//plane projection
-	Projector->PlaneProjection(spMerging->getMergedClusterND_Device(), spMerging->getMergedClusterLabel_Device(), spMerging->getMergedClusterVariance_Device(), EdgeEnhanced3DPoints_Device);
+	Projector->PlaneProjection(spMerging->getMergedClusterND_Device(), spMerging->getMergedClusterLabel_Device(), 
+		spMerging->getMergedClusterVariance_Device(), EdgeEnhanced3DPoints_Device, spMerging->getMergedClusterSize_Device());
 }
 float*	KinectDepthEnhancement::getRefinedDepth_Device(){
 	return ERS->getRefinedDepth_Device();

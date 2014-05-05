@@ -191,47 +191,84 @@ __global__ void variance_optimization(
 	float3* planefitted3d,
 	float3* normalized_3d,
 	const int* labels,
+	int* size,
 	int width,
 	int height){
 		int x = blockIdx.x * blockDim.x + threadIdx.x;
 		int y = blockIdx.y * blockDim.y + threadIdx.y;
 
+		//optimization
 		if(planefitted3d[y*width+x].z > 50.0f){
-				//if(fabs((float)optimized3d[y*width+x].z-(float)planefitted3d[y*width+x].z)>optimized3d[y*width+x].z*0.1f){
-				//		optimized3d[y*width+x].x = input3d[y*width+x].x;
-				//		optimized3d[y*width+x].y = input3d[y*width+x].y;
-				//		optimized3d[y*width+x].z = input3d[y*width+x].z;
-				//}
-				if(fabs((float)optimized3d[y*width+x].z-(float)planefitted3d[y*width+x].z)<optimized3d[y*width+x].z*0.01f &&
-						labels[y*width+x] > -1 && (acos(variance[labels[y*width+x]]) < (3.141592653f / 8.0f))){
+			float diff = fabs((float)optimized3d[y*width+x].z-(float)planefitted3d[y*width+x].z);
+				if(diff < optimized3d[y*width+x].z*0.03f &&labels[y*width+x] > -1 && (acos(variance[labels[y*width+x]]) < (3.141592653f / 8.0f)) && size[labels[y*width+x]] > 1300){
+						if(diff < optimized3d[y*width+x].z*0.01f){
+						optimized3d[y*width+x].z = planefitted3d[y*width+x].z;
+						}else{
 						optimized3d[y*width+x].z = planefitted3d[y*width+x].z*variance[labels[y*width+x]]+optimized3d[y*width+x].z*(1.0f-variance[labels[y*width+x]]);
-						//planefitted3d[y*width+x].z = planefitted3d[y*width+x].z*(1.0f-variance[y*width+x])+input3d[y*width+x].z*variance[y*width+x];
-						optimized3d[y*width+x].x = normalized_3d[y*width+x].x*optimized3d[y*width+x].z;
-						optimized3d[y*width+x].y = normalized_3d[y*width+x].y*optimized3d[y*width+x].z;
+						}
 				}
-		
 		}
 }
-void Projection_GPU::PlaneProjection(const float4* nd_device, const int* labels_device, const float* variance_device, const float3* points3d_device){
+
+__global__ void bilateralfilter(
+	float3* normalized_3d,
+	float3* optimized3d,
+	float* spatial_filter,
+	int window_size,
+	float depth_sigma,
+	int width,
+	int height){
+		int x = blockIdx.x * blockDim.x + threadIdx.x;
+		int y = blockIdx.y * blockDim.y + threadIdx.y;
+		//filtering
+		float numerator = 0.0f, denominator = 0.0f;
+		for(int i = - window_size/2; i <= window_size/2; i++){		// y
+			for(int j = -window_size/2; j <= window_size/2; j++){		// x
+				int xj = x+j, yi = y+i;
+				if(xj >= 0 && xj < width && yi >= 0 && yi < height && optimized3d[yi*width+xj].z > 50.0f){
+					//depth filter
+					float depth_diff = powf(optimized3d[yi*width+xj].z - optimized3d[y*width+x].z, 2.0f);
+					float filter = expf(-depth_diff/(2.0f*powf(depth_sigma, 2.0f)));
+					//filter
+					filter *= spatial_filter[(i+window_size/2)*window_size+(j+window_size/2)];
+					numerator += optimized3d[yi*width+xj].z*filter; 
+					denominator += filter;
+				}
+			}
+		}
+		if(denominator == 0.0f)
+			optimized3d[y*width+x].z = 0.0f;
+		else
+			optimized3d[y*width+x].z = numerator/denominator;
+
+		optimized3d[y*width+x].x = normalized_3d[y*width+x].x*optimized3d[y*width+x].z;
+		optimized3d[y*width+x].y = normalized_3d[y*width+x].y*optimized3d[y*width+x].z;
+}
+
+void Projection_GPU::PlaneProjection(const float4* nd_device, const int* labels_device, const float* variance_device, const float3* points3d_device, int* size_device){
 	//Ç∑Ç◊ÇƒÇÃì_ÇïΩñ fittingÇ∑ÇÈ
 	//plane projection
 	setPsuedoDepth<<<dim3(width / 32, height / 24), dim3(32, 24)>>>
 		(points3d_device, PlaneFitted3D_Device, Normalized3D_Device, nd_device, labels_device, variance_device, width, height);
-
+	
 	//optimization
 	cudaMemcpy(Optimized3D_Device, points3d_device, width * height * sizeof(float3), cudaMemcpyDeviceToDevice);
 	//for(int i=0; i<20; i++){
 	//mrf_optimization<<<dim3(width / 32, height / 24), dim3(32, 24)>>>
 	//		(Optimized3D_Device, PlaneFitted3D_Device, Normalized3D_Device, labels_device, width, height, 5, 0.5f, 1.0f);
 	//}
-
+	// plane fittng
 	variance_optimization<<<dim3(width / 32, height / 24), dim3(32, 24)>>>
-			(Optimized3D_Device, variance_device, PlaneFitted3D_Device, Normalized3D_Device, labels_device, width, height);
+			(Optimized3D_Device, variance_device, PlaneFitted3D_Device, Normalized3D_Device, labels_device, size_device, width, height);
+	//bilateral filter
+	bilateralfilter<<<dim3(width / 32, height / 24), dim3(32, 24)>>>
+			(Normalized3D_Device, Optimized3D_Device, SpatialFilter_Device, WindowSize, DepthSigma, width, height);
 
 	//3DÅ®2D
 	//Device to Host
-	cudaMemcpy(PlaneFitted3D_Host, points3d_device, width * height * sizeof(float3), cudaMemcpyDeviceToHost);
-	cudaMemcpy(Optimized3D_Host, Optimized3D_Device, width * height * sizeof(float3), cudaMemcpyDeviceToHost);
+	//cudaMemcpy(PlaneFitted3D_Host, PlaneFitted3D_Device, width * height * sizeof(float3), cudaMemcpyDeviceToHost);
+	//cudaMemcpy(Optimized3D_Host, Optimized3D_Device, width * height * sizeof(float3), cudaMemcpyDeviceToHost);
+	
 }
 
 void Projection_GPU::PlaneProjection(const float4* nd_device, const int* labels_device, const float3* points3d_device){
@@ -277,8 +314,8 @@ void Projection_GPU::PlaneProjection(
 		}
 		//3DÅ®2D
 		//Device to Host
-		cudaMemcpy(PlaneFitted3D_Host, PlaneFitted3D_Device, width * height * sizeof(float3), cudaMemcpyDeviceToHost);
-		cudaMemcpy(Optimized3D_Host, Optimized3D_Device, width * height * sizeof(float3), cudaMemcpyDeviceToHost);
+		//cudaMemcpy(PlaneFitted3D_Host, PlaneFitted3D_Device, width * height * sizeof(float3), cudaMemcpyDeviceToHost);
+		//cudaMemcpy(Optimized3D_Host, Optimized3D_Device, width * height * sizeof(float3), cudaMemcpyDeviceToHost);
 	
 		//for(int y=0; y<height; y++){
 		//	for(int x=0; x<width; x++){

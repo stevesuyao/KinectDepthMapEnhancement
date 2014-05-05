@@ -9,7 +9,10 @@ class Projection_GPU{
 public:
 	Projection_GPU(int width, int height, const cv::Mat intrinsic);
 	~Projection_GPU();
-	void					PlaneProjection(const float4* nd_device, const int* labels_device, const float* variance_device, const float3* points3d_device);//my kinect noise recuction	
+	static const int	WindowSize;
+	static const float	SpatialSigma;
+	static const float	DepthSigma;
+	void					PlaneProjection(const float4* nd_device, const int* labels_device, const float* variance_device, const float3* points3d_device, int* size_device);//my kinect noise recuction	
 	void					PlaneProjection(const float4* nd_device, const int* labels_device, const float3* points3d_device);	//sp based depth super-resolution
 	void					PlaneProjection(const float3* normals_device, const float3* centers_device, const int* labels_device, 
 													const float* variance_device, const float3* points3d_device);	
@@ -21,7 +24,9 @@ private:
 	void initMemory();
 	void getProjectedMap();
 	void initNormalized3D();
-	
+	float*				SpatialFilter_Host;
+	float*				SpatialFilter_Device;
+	void				calcSpatialFilter();
 	int width;
 	int height;
 	float Fx;

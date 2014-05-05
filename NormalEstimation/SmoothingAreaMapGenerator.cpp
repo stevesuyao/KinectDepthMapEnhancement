@@ -12,7 +12,7 @@
 SmoothingAreaMapGenerator::SmoothingAreaMapGenerator(int w, int h){
 	width = w, height = h;
 
-	max_depth_change_factor_ = 0.03f;//メートル
+	max_depth_change_factor_ = 0.05f;//メートル
 	normal_smoothing_size_ = 20.0f;//pixel
 	//max_depth_change_factor_ = 300.0f;
 	//normal_smoothing_size_ = 10000.0f;

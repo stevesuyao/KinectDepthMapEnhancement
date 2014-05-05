@@ -33,7 +33,7 @@ __global__ void edge_refining(
 								for(int i=target_pix.x+1; i<=x; i++){
 									refined_labels[y*width+i] = refined_depth_label;
 									//refined_labels[y*width+i] = -100;
-									if(fabs(refined_depth[y*width+i]-refined_depth[y*width+i+1])>refined_depth[y*width+i]*0.01f)
+									if(fabs(refined_depth[y*width+i]-refined_depth[y*width+i+1])>refined_depth[y*width+i]*0.1f)
 									refined_depth[y*width+i] = 0.0f;
 								}
 								break;
@@ -46,7 +46,7 @@ __global__ void edge_refining(
 								for(int i=x+1; i<=target_pix.x-1; i++){
 									refined_labels[y*width+i] = refined_depth_label;
 									//refined_labels[y*width+i] = -100;
-									if(fabs(refined_depth[y*width+i]-refined_depth[y*width+i-1])>refined_depth[y*width+i]*0.01f)
+									if(fabs(refined_depth[y*width+i]-refined_depth[y*width+i-1])>refined_depth[y*width+i]*0.1f)
 									refined_depth[y*width+i] = 0.0f;
 								}
 								break;
@@ -77,7 +77,7 @@ __global__ void edge_refining(
 								for(int i=target_pix.y+1; i<=y; i++){
 									refined_labels[i*width+x] = refined_depth_label;
 									//refined_labels[i*width+x] = -100;
-									if(fabs(refined_depth[i*width+x]-refined_depth[(i+1)*width+x])>refined_depth[i*width+x]*0.01f)
+									if(fabs(refined_depth[i*width+x]-refined_depth[(i+1)*width+x])>refined_depth[i*width+x]*0.1f)
 									refined_depth[i*width+x] = 0.0f;
 								}
 								break;
@@ -90,7 +90,7 @@ __global__ void edge_refining(
 								for(int i=y+1; i<=target_pix.y-1; i++){
 									refined_labels[i*width+x] = refined_depth_label;
 									//refined_labels[i*width+x] = -100;
-									if(fabs(refined_depth[i*width+x]-refined_depth[(i-1)*width+x])>refined_depth[i*width+x]*0.01f)
+									if(fabs(refined_depth[i*width+x]-refined_depth[(i-1)*width+x])>refined_depth[i*width+x]*0.1f)
 									refined_depth[i*width+x] = 0.0f;
 								}
 								break;

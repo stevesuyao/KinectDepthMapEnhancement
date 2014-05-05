@@ -41,7 +41,9 @@ __global__ void markov_random_field(
 
 void MarkovRandomField::Process(float* depth_device, cv::gpu::GpuMat color_image){
 	
-	//joint bilateral filtering
+	//markov random field
 	markov_random_field<<<dim3(Width/32, Height/24), dim3(32, 24)>>>
 		(Width, Height, depth_device, color_image, Filtered_Device, WindowSize, ColorSigma, SmoothSigma);
+	
+	cudaMemcpy(Filtered_Host, Filtered_Device, sizeof(float)*Width*Height, cudaMemcpyDeviceToHost);
 }

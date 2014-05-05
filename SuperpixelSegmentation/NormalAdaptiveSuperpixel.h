@@ -16,7 +16,6 @@ class NormalAdaptiveSuperpixel: public DepthAdaptiveSuperpixel{
 public:	
 	NormalAdaptiveSuperpixel(int width, int height);	
 	~NormalAdaptiveSuperpixel();
-	void SetParametor(int rows, int cols, cv::Mat_<double> intrinsic);
 	void Segmentation(cv::gpu::GpuMat color_image, float3* points3d_device, float3* normals_device, 
 						float color_sigma, float spatial_sigma, float depth_sigma, float normal_sigma, int iteration);
 	cv::Mat_<cv::Vec3b>		getNormalImg();
@@ -28,7 +27,7 @@ public:
 	float*		getNormalsVarianceDevice();
 private:
 	cv::Mat_<cv::Vec3b>			normalImage;
-	cv::gpu::GpuMat				Intrinsic_Device;
+	float*						reliabilityMap;
 	float3*						superpixelCenters_Host;
 	float3*						superpixelCenters_Device;
 	float3*						superpixelNormals_Host;

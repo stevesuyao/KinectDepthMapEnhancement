@@ -140,3 +140,6 @@ float* LabelEquivalenceSeg::getMergedClusterVariance_Device()const{
 float* LabelEquivalenceSeg::getMergedClusterVariance_Host()const{
 	return MergedClusterVariance_Host;
 }
+int* LabelEquivalenceSeg::getMergedClusterSize_Device()const{
+	return merged_cluster_size;
+}

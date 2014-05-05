@@ -282,12 +282,14 @@ __global__ void joint_bilateral_filtering(
 
 void JointBilateralFilter::Process(float* depth_device, cv::gpu::GpuMat color_image){
 	
-	cv::gpu::bilateralFilter(color_image, smooth_Device, 11, 50.0f, 30.0f);
-	smooth_Device.download(smooth_Host);
-	cv::imshow("smooth", smooth_Host);
+	cv::gpu::bilateralFilter(color_image, smooth_Device, 5, 30.0f, 30.0f);
+	//smooth_Device.download(smooth_Host);
+	//cv::imshow("smooth", smooth_Host);
 	////joint bilateral filtering
 	joint_bilateral_filtering<<<dim3(Width/32, Height/24), dim3(32, 24)>>>
 		(Width, Height, depth_device, smooth_Device, SpatialFilter_Device, Filtered_Device, WindowSize, ColorSigma, DepthSigma);
+	
+	//cudaMemcpy(Filtered_Host, Filtered_Device, sizeof(float)*Width*Height, cudaMemcpyDeviceToHost);
 
 	//joint_bilateral_filtering<8*8><<<dim3(Width, Height), dim3(8, 8)>>>
 	//	(Width, Height, depth_device, color_image, SpatialFilter_Device, Filtered_Device, WindowSize, ColorSigma, DepthSigma);

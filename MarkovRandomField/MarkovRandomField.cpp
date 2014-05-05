@@ -1,9 +1,9 @@
 #include "MarkovRandomField.h"
 
-const int MarkovRandomField::WindowSize = 11;
+const int MarkovRandomField::WindowSize = 5;
 //const float MarkovRandomField::SpatialSigma = 70.0f;
 const float MarkovRandomField::ColorSigma = 50.0f;
-const float MarkovRandomField::SmoothSigma = 20.0f;
+const float MarkovRandomField::SmoothSigma = 150.0f;
 
 MarkovRandomField::MarkovRandomField(int width, int height):
 	Width(width),
@@ -42,7 +42,6 @@ float* MarkovRandomField::getFiltered_Device()const{
 	return Filtered_Device;
 }
 float* MarkovRandomField::getFiltered_Host()const{
-	cudaMemcpy(Filtered_Host, Filtered_Device, sizeof(float)*Width*Height, cudaMemcpyDeviceToHost);
 	return Filtered_Host;
 }
 cv::gpu::GpuMat	MarkovRandomField::getSmoothImage_Device(){

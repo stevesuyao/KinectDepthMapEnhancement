@@ -326,8 +326,15 @@ __global__ void computeRestNormalGPU(float3* normal, float3* vertice, int width,
 		v_v.z = (pv01.z-pv02.z);
 
 		float3* n  = &normal[acs];
+		float d_h = sqrtf(pow(ph01.x-vertice[acs].x, 2.0f) + 
+							pow(ph01.y-vertice[acs].y, 2.0f) +
+								pow(ph01.z-vertice[acs].z, 2.0f));
+		float d_v = sqrtf(pow(pv01.x-vertice[acs].x, 2.0f) + 
+							pow(pv01.y-vertice[acs].y, 2.0f) +
+								pow(pv01.z-vertice[acs].z, 2.0f));
+		
 		//compute cross product
-		if( ph02.z != 0.0){
+		if( ph02.z != 0.0 && d_h < vertice[acs].z * 0.01f && d_v < vertice[acs].z * 0.01f){
 			n->x = v_h.z * v_v.y - v_h.y * v_v.z;
 			n->y =-(v_h.x * v_v.z - v_h.z * v_v.x);
 			n->z = v_h.y * v_v.x - v_h.x * v_v.y;
@@ -338,11 +345,11 @@ __global__ void computeRestNormalGPU(float3* normal, float3* vertice, int width,
 		}
 	}
 	if(normal[acs].x != -1.0 || 
-			normal[acs].y != -1.0 ||
-				normal[acs].z != -1.0){
-		normal[acs].x *= -1.0f;
-		normal[acs].y *= 1.0f;
-		normal[acs].z *= -1.0f;
+		normal[acs].y != -1.0 ||
+		normal[acs].z != -1.0){
+			normal[acs].x *= -1.0f;
+			normal[acs].y *= 1.0f;
+			normal[acs].z *= -1.0f;
 	}
 }
 __global__ void computeNormalBilateralGPU(float3* normal, float3* vertice, int width, int height){
@@ -443,11 +450,11 @@ cv::Mat NormalMapGenerator::getSegmentNormalImg(bool*mask){
 	for(int y=0;y<height;y++){
 		uchar *p = normalSementMat.ptr(y);
 		for(int x=0;x<width;x++){
-				//std::cout << segmentNormalMapHost[y*width+x].x<<", "<<segmentNormalMapHost[y*width+x].y <<", "<<segmentNormalMapHost[y*width+x].z<<std::endl;
-		
-				p[x*3+0] = (int)(255*(segmentNormalMapHost[y*width+x].x+1.0)/2);
-				p[x*3+1] = (int)(255*(segmentNormalMapHost[y*width+x].y+1.0)/2);
-				p[x*3+2] = (int)(255*(segmentNormalMapHost[y*width+x].z+1.0)/2);
+			//std::cout << segmentNormalMapHost[y*width+x].x<<", "<<segmentNormalMapHost[y*width+x].y <<", "<<segmentNormalMapHost[y*width+x].z<<std::endl;
+
+			p[x*3+0] = (int)(255*(segmentNormalMapHost[y*width+x].x+1.0)/2);
+			p[x*3+1] = (int)(255*(segmentNormalMapHost[y*width+x].y+1.0)/2);
+			p[x*3+2] = (int)(255*(segmentNormalMapHost[y*width+x].z+1.0)/2);
 		}
 	}
 	delete segmentNormalMapHost;
@@ -485,9 +492,9 @@ void NormalMapGenerator::saveSegmentNormalImg(char* str, bool*mask){
 	for(int y=0;y<height;y++){
 		uchar *p = normalSementMat.ptr(y);
 		for(int x=0;x<width;x++){
-				p[x*3+0] = (int)(255*(segmentNormalMapHost[y*width+x].x+1.0)/2);
-				p[x*3+1] = (int)(255*(segmentNormalMapHost[y*width+x].y+1.0)/2);
-				p[x*3+2] = (int)(255*(segmentNormalMapHost[y*width+x].z+1.0)/2);
+			p[x*3+0] = (int)(255*(segmentNormalMapHost[y*width+x].x+1.0)/2);
+			p[x*3+1] = (int)(255*(segmentNormalMapHost[y*width+x].y+1.0)/2);
+			p[x*3+2] = (int)(255*(segmentNormalMapHost[y*width+x].z+1.0)/2);
 		}
 	}
 	delete segmentNormalMapHost;

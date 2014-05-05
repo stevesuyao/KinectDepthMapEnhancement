@@ -1,4 +1,4 @@
-﻿2014/03/30 22:04:15 にビルドを開始しました。
+﻿2014/05/05 12:47:07 にビルドを開始しました。
      1>ノード 2 上のプロジェクト "D:\Users\Kazuki\Documents\Visual Studio 2010\Projects\KinectDepthmapEnhancement\KinectDepthmapEnhancement\KinectDepthmapEnhancement.vcxproj" (build ターゲット)。
      1>InitializeBuildStatus:
          "AlwaysCreate" が指定されたため "x64\Release\KinectDepthmapEnhancement.unsuccessfulbuild" を作成しています。
@@ -34,50 +34,6 @@
        すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
        AddCudaCompileDeps:
        すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
-       AddCudaCompileDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
-       AddCudaCompileDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompileDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       AddCudaCompilePropsDeps:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "AddCudaCompilePropsDeps" を省略します。
-       CudaBuild:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
-       CudaBuild:
-       すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
        CudaBuild:
        すべての出力ファイルが入力ファイルに対して最新なので、ターゲット "CudaBuild" を省略します。
        CudaBuild:
@@ -279,8 +235,6 @@
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Users\Kazuki\Documents\Visual Studio 2010\Projects\KinectDepthmapEnhancement\x64\Release\KinectDepthmapEnhancement.exe" /NOLOGO /LIBPATH:"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\lib\x64" glut64.lib PGRFlyCaptureGUI.lib PGRFlyCapture.lib flycapture2_C.lib cublas.lib cuda.lib cudart.lib cufft.lib curand.lib cusparse.lib npp.lib nvcuvenc.lib nvcuvid.lib opencv_calib3d243.lib opencv_contrib243.lib opencv_core243.lib opencv_features2d243.lib opencv_gpu243.lib opencv_highgui243.lib opencv_imgproc243.lib opencv_legacy243.lib opencv_ml243.lib opencv_objdetect243.lib opencv_ts243.lib opencv_video243.lib pcl_apps_release.lib pcl_common_release.lib pcl_features_release.lib pcl_filters_release.lib pcl_io_release.lib pcl_io_ply_release.lib pcl_kdtree_release.lib pcl_keypoints_release.lib pcl_octree_release.lib pcl_registration_release.lib pcl_sample_consensus_release.lib pcl_search_release.lib pcl_segmentation_release.lib pcl_surface_release.lib pcl_tracking_release.lib pcl_visualization_release.lib flann.lib flann_s.lib flann_cpp_s.lib qhull6.lib qhullcpp.lib qhullstatic.lib qhullstatic_p.lib openNI64.lib OpenNI.jni64.lib XnVNITE.jni64.lib XnVNITE64_1_5_2.lib NiSampleModule64.lib NiSampleExtensionModule64.lib MapReduceMPI.lib mpistubs.lib vtkalglib.lib vtkCharts.lib vtkCommon.lib vtkDICOMParser.lib vtkexoIIc.lib vtkexpat.lib vtkFiltering.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGeovis.lib vtkGraphics.lib vtkhdf5.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkjpeg.lib vtklibxml2.lib vtkmetaio.lib vtkNetCDF.lib vtkNetCDF_cxx.lib vtkpng.lib vtkproj4.lib vtkRendering.lib vtksqlite.lib vtksys.lib vtktiff.lib vtkverdict.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib opengl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"x64\Release\KinectDepthmapEnhancement.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Users\Kazuki\Documents\Visual Studio 2010\Projects\KinectDepthmapEnhancement\x64\Release\KinectDepthmapEnhancement.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Users\Kazuki\Documents\Visual Studio 2010\Projects\KinectDepthmapEnhancement\x64\Release\KinectDepthmapEnhancement.lib" /MACHINE:X64 x64\Release\ArrayBuffer.cu.obj
          x64\Release\Buffer2D.cu.obj
-         x64\Release\DepthEnhancement.cu.obj
-         x64\Release\KmeansClustering.cu.obj
          x64\Release\DimensionConvertor.cu.obj
          x64\Release\EdgeRefinedSuperpixel.cu.obj
          x64\Release\JointBilateralFilter.cu.obj
@@ -298,8 +252,6 @@
          x64\Release\ArrayBuffer.obj
          x64\Release\Buffer2D.obj
          x64\Release\Cluster.obj
-         x64\Release\DepthEnhancement.obj
-         x64\Release\KmeansClustering.obj
          x64\Release\DimensionConvertor.obj
          x64\Release\EdgeRefinedSuperpixel.obj
          x64\Release\JointBilateralFilter.obj
@@ -332,4 +284,4 @@
 
 ビルドに成功しました。
 
-経過時間 00:00:15.68
+経過時間 00:00:18.91

@@ -39,7 +39,7 @@ __device__ bool compNormal(float4* a, float4* b){
 		acos(a->x * b->x + a->y * b->y + a->z * b->z)>0 && 
 		acos(a->x * b->x + a->y * b->y + a->z * b->z) < (3.141592653f / 8.0f)
 		&&
-		abs(a->w - b->w) < 30.0f;
+		abs(a->w - b->w) < 150.0f;
 }
 
 
@@ -79,7 +79,7 @@ __global__ void scanKernel(
 	int label1 = merged_cluster_label[x + y * width];
 	int label2;
 
-	if(label1 > -1 && acos(variance[label1]) < (3.141592653f / 3.0f)){
+	if(label1 > -1/* && acos(variance[label1]) < (3.141592653f / 6.0f)*/){
 		label2 = getMin(
 			//up
 			input_nd[x + (y - 1 > 0 ? y - 1 : 0) * width],
@@ -232,7 +232,7 @@ void LabelEquivalenceSeg::labelImage(float3* cluster_normals_device, int* cluste
 	initLabel<<<dim3(width / 32, height / 24), dim3(32, 24)>>>
 		(InputND_Device, MergedClusterLabel_Device, ref, cluster_normals_device, cluster_label_device, cluster_centers_device, width, height);
 	
-	for(int i = 0; i < 20; i++){
+	for(int i = 0; i < 10; i++){
 		//scan(cluster_label_device);
 		scanKernel<<<dim3(width / 32, height / 24), dim3(32, 24)>>>
 			(InputND_Device, MergedClusterLabel_Device, ref, cluster_label_device, variance_device, width, height);
@@ -276,7 +276,7 @@ void LabelEquivalenceSeg::labelImage(float3* cluster_normals_device, int* cluste
 
 	//memcpy
 	cudaMemcpy(MergedClusterLabel_Host, MergedClusterLabel_Device, sizeof(int)*width*height, cudaMemcpyDeviceToHost);
-	cudaMemcpy(MergedClusterND_Host, MergedClusterND_Device, sizeof(float4)*width*height, cudaMemcpyDeviceToHost);
-	cudaMemcpy(ref_host, ref, sizeof(int)*width*height, cudaMemcpyDeviceToHost);
+	//cudaMemcpy(MergedClusterND_Host, MergedClusterND_Device, sizeof(float4)*width*height, cudaMemcpyDeviceToHost);
+	//cudaMemcpy(ref_host, ref, sizeof(int)*width*height, cudaMemcpyDeviceToHost);
 	
 }
