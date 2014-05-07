@@ -102,7 +102,7 @@ int main(){
 		cv::Mat_<float> averaged_depth(Kinect::Height, Kinect::Width);
 		cv::Mat_<float> depth(Kinect::Height, Kinect::Width);
 		Buffer.getDepthMap(bufferDepth_Device);
-		cudaMemcpy(bufferDepth_Host, bufferDepth_Device, sizeof(float)*Kinect::Width*Kinect::Height, cudaMemcpyHostToDevice);
+		cudaMemcpy(bufferDepth_Host, bufferDepth_Device, sizeof(float)*Kinect::Width*Kinect::Height, cudaMemcpyDeviceToHost);
 		for(int y=0; y<Kinect::Height; y++){
 			for(int x=0; x<Kinect::Width; x++){
 				averaged_depth.at<float>(y, x) = bufferDepth_Host[y*Kinect::Width+x];
